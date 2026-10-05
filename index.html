@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b3b2e">
-<title>AAG BusinessBook V2</title>
+<title>AAG BusinessBook V2.1</title>
 <style>
 :root{--g:#0b3b2e;--g2:#145943;--gold:#d9ad45;--bg:#f5f7f6;--card:#fff;--text:#17211d;--muted:#6b7771;--danger:#c0392b}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -29,42 +29,16 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
  header.top nav{display:none}
 }
 
-/* V2 Home Page — Sokobook-inspired AAG layout */
-.home-v2{padding-top:2px}
-.home-v2 .home-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0 18px}
-.home-v2 .home-top h2{font-size:30px;margin:0 0 4px}
-.home-v2 .home-top small{color:var(--muted)}
-.privacy-row{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #e5ebe8;border-radius:16px;padding:14px 16px;margin-bottom:14px;box-shadow:0 4px 18px #0b3b2e0d}
-.privacy-switch{width:54px;height:30px;border:0;border-radius:20px;background:#d9e2de;position:relative;cursor:pointer}
-.privacy-switch i{position:absolute;width:24px;height:24px;top:3px;left:4px;border-radius:50%;background:#fff;box-shadow:0 1px 5px #0003;transition:.2s}
-.privacy-switch.on{background:#42b98f}.privacy-switch.on i{left:26px}
-.home-money-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.money-card{background:#fff;border-radius:16px;padding:16px;border:1px solid #e5ebe8;box-shadow:0 4px 18px #0b3b2e0d;min-height:108px}
-.money-card.receive{background:#effaf5;border-color:#a8dfc8}.money-card.give{background:#fff2f5;border-color:#efb9c8}
-.money-card .mc-value{font-size:24px;font-weight:800;margin-bottom:7px}.money-card.receive .mc-value{color:#35aa82}.money-card.give .mc-value{color:#d94d70}
-.money-card .mc-label{color:#53625b;font-size:14px}.money-card .arrow{float:right;font-size:22px}
-.explore-title,.shortcuts-title{font-size:22px;margin:24px 0 12px}
-.explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.explore-card{background:#fff;border:1px solid #e5ebe8;border-radius:16px;padding:18px 10px;text-align:center;box-shadow:0 4px 18px #0b3b2e0d;cursor:pointer}
-.explore-card .ico{font-size:28px;margin-bottom:9px}.explore-card b{font-size:14px}
-.shortcuts{background:#fff;border:1px solid #e5ebe8;border-radius:18px;padding:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;box-shadow:0 4px 18px #0b3b2e0d}
-.shortcut{text-align:center;border:0;background:transparent;color:var(--text);font-size:12px;cursor:pointer}
-.shortcut .sico{width:48px;height:48px;border-radius:50%;background:#e7f8f0;color:#42b98f;display:grid;place-items:center;margin:0 auto 7px;font-size:22px}
-.cashflow-card{margin-top:18px;background:#fff;border:1px solid #e5ebe8;border-radius:18px;padding:16px;box-shadow:0 4px 18px #0b3b2e0d}
-.cashflow-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.cashflow-head b{font-size:20px}.cashflow-head select{border:0;background:#f1f5f3;border-radius:10px;padding:8px}
-.cashflow-chart{height:150px;display:flex;align-items:flex-end;gap:10px;padding:10px 2px 4px}
-.cf-day{flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:4px}
-.cf-bar{width:9px;border-radius:6px 6px 2px 2px;background:#42b98f;min-height:3px}.cf-bar.out{background:#ef666d}
-.cf-labels{display:flex;gap:10px}.cf-labels span{flex:1;text-align:center;font-size:10px;color:var(--muted)}
-@media(max-width:700px){.home-v2 .home-top h2{font-size:28px}.shortcuts{grid-template-columns:repeat(4,1fr)}.explore-card{padding:15px 5px}.money-card .mc-value{font-size:21px}}
-
+/* AAG V2.1 unique home */
+.home-hero{background:linear-gradient(135deg,#0b3b2e 0%,#145943 68%,#1d6a50 100%);color:#fff;border-radius:22px;padding:22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:18px;box-shadow:0 10px 28px #0b3b2e22}.home-hero h2{margin:7px 0 6px;font-size:28px;max-width:650px}.home-hero p{margin:0;color:#d5e7df;max-width:650px;line-height:1.45}.eyebrow{font-size:11px;letter-spacing:1.4px;color:#e9c65e;font-weight:800}.hero-btn{white-space:nowrap}.overview-head{display:flex;justify-content:space-between;align-items:end;margin:8px 2px 12px}.overview-head h3,.unique-head h3{margin:0}.live-dot{font-size:12px;color:#1b9b6b;background:#e5f6ef;padding:7px 10px;border-radius:20px;font-weight:700}.aag-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric-card{background:#fff;border:1px solid #e2ebe6;border-radius:18px;padding:17px;box-shadow:0 6px 20px #0b3b2e0a;position:relative;overflow:hidden}.metric-card:after{content:"";position:absolute;right:-28px;bottom:-35px;width:90px;height:90px;border-radius:50%;background:#eef7f3}.metric-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#edf6f2;color:#0b3b2e;font-weight:800;margin-bottom:12px}.metric-card small{display:block;color:#63736b}.metric-card strong{display:block;font-size:25px;margin:6px 0}.metric-card span{font-size:11px;color:#84908b}.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.quick-card{border:1px solid #e1e9e5;background:#fff;border-radius:17px;padding:16px;text-align:left;display:flex;flex-direction:column;gap:6px;box-shadow:0 5px 18px #0b3b2e09;cursor:pointer}.quick-card span{font-size:24px}.quick-card b{font-size:14px;color:#17382e}.quick-card small{color:#7b8882}.home-columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:20px}.alert-panel,.performance-card{background:#fff;border:1px solid #e1e9e5;border-radius:18px;padding:15px;min-height:120px}.alert-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid #edf1ef}.alert-item:last-child{border-bottom:0}.alert-item .ai{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#fff4dd}.alert-item b{display:block}.alert-item small{color:#77847e}.no-alert{color:#718078;padding:22px;text-align:center}.performance-card{display:grid;grid-template-columns:1fr;gap:8px}.performance-card>div{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:11px;background:#f5f8f6}.performance-card small{color:#65736d}.performance-card b{font-size:16px}.unique-head{margin-top:22px}.bottom-nav .bn.sell{background:#d9ad45}
+@media(max-width:800px){.aag-metrics{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(2,1fr)}.home-columns{grid-template-columns:1fr}.home-hero{align-items:flex-start;flex-direction:column}.home-hero h2{font-size:24px}.hero-btn{width:100%}}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-    <div class="brand"><div class="logo">A</div><div><b>AAG BusinessBook</b><small id="tagline">V2 • Kasuwanci cikin sauƙi</small></div></div>
+    <div class="brand"><div class="logo">A</div><div><b>AAG BusinessBook</b><small id="tagline">V2.1 • Tsarin kasuwanci na AAG</small></div></div>
     <select id="langSwitch" onchange="setLang(this.value)" style="border:1px solid #d9ad45;background:#fff;color:#0b3b2e;border-radius:10px;padding:9px;font-weight:700">
       <option value="ha">Hausa</option><option value="en">English</option>
     </select>
@@ -73,51 +47,27 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 </header>
 <main>
 <section id="dashboard" class="view active">
- <div class="home-v2">
-  <div class="home-top">
-   <div><h2 id="homeTitle">Dashboard</h2><small id="today"></small></div>
-   <button class="btn gold" onclick="openSale()" id="homeNewSale">+ New Sale</button>
-  </div>
-
-  <div class="privacy-row">
-   <b id="privacyLabel">Privacy Mode</b>
-   <button class="privacy-switch" id="privacySwitch" onclick="togglePrivacy()" aria-label="Privacy Mode"><i></i></button>
-  </div>
-
-  <div class="home-money-grid">
-   <div class="money-card receive"><span class="arrow">›</span><div class="mc-value" id="receiveValue">₦0</div><div class="mc-label" id="receiveLabel">To Receive ↓</div></div>
-   <div class="money-card give"><span class="arrow">›</span><div class="mc-value" id="giveValue">₦0</div><div class="mc-label" id="giveLabel">To Give ↑</div></div>
-   <div class="money-card"><span class="arrow">›</span><div class="mc-value" id="monthSales">₦0</div><div class="mc-label" id="monthSalesLabel">Sales (October)</div></div>
-   <div class="money-card"><span class="arrow">›</span><div class="mc-value" id="monthPurchases">₦0</div><div class="mc-label" id="monthPurchasesLabel">Purchase (October)</div></div>
-   <div class="money-card"><span class="arrow">›</span><div class="mc-value" id="monthExpenses">₦0</div><div class="mc-label" id="monthExpensesLabel">Expense (October)</div></div>
-   <div class="money-card"><span class="arrow">›</span><div class="mc-value" id="balanceValue">₦0</div><div class="mc-label" id="balanceLabel">Total Balance · Cash & Bank</div></div>
-  </div>
-
-  <h3 class="explore-title" id="exploreTitle">Explore App</h3>
-  <div class="explore-grid">
-   <button class="explore-card" onclick="openQuickEntry()"><div class="ico">🧮</div><b id="quickEntryLabel">Quick Entry</b></button>
-   <button class="explore-card" onclick="openSale()"><div class="ico">🧾</div><b id="quickPosLabel">Quick POS</b></button>
-   <button class="explore-card" onclick="show('profit')"><div class="ico">📊</div><b id="reportsLabel">View Reports</b></button>
-  </div>
-
-  <h3 class="shortcuts-title" id="shortcutsTitle">Shortcuts</h3>
-  <div class="shortcuts">
-   <button class="shortcut" onclick="openCustomer()"><div class="sico">👤+</div><span id="scParty">Add Party</span></button>
-   <button class="shortcut" onclick="openSale()"><div class="sico">🏷️</div><span id="scInvoice">Sales Invoice</span></button>
-   <button class="shortcut" onclick="openPaymentIn()"><div class="sico">💵</div><span id="scIn">Payment In</span></button>
-   <button class="shortcut" onclick="openPaymentOut()"><div class="sico">💸</div><span id="scOut">Payment Out</span></button>
-   <button class="shortcut" onclick="openRestock()"><div class="sico">🛒</div><span id="scPurchase">Purchase</span></button>
-   <button class="shortcut" onclick="openProduct()"><div class="sico">📦</div><span id="scItem">Add Item</span></button>
-   <button class="shortcut" onclick="openExpense()"><div class="sico">👛</div><span id="scExpense">Expense</span></button>
-   <button class="shortcut" onclick="openNote()"><div class="sico">📝</div><span id="scNote">Add Note</span></button>
-   <button class="shortcut" onclick="openSalesReturn()"><div class="sico">🏷️</div><span id="scReturn">Sales Return</span></button>
-  </div>
-
-  <div class="cashflow-card">
-   <div class="cashflow-head"><b id="cashflowTitle">Cashflow <span style="font-weight:400;color:var(--muted)">(Last 7 Days)</span></b><select id="cashflowRange" onchange="renderCashflow()"><option value="7">Daily</option></select></div>
-   <div class="cashflow-chart" id="cashflowChart"></div>
-   <div class="cf-labels" id="cashflowLabels"></div>
-  </div>
+ <div class="home-hero">
+  <div><span class="eyebrow" id="homeEyebrow">AAG BUSINESS CONTROL</span><h2 id="homeTitle">Kasuwancinka, a ƙarƙashin iko.</h2><p id="homeSub">Duba kuɗi, sayarwa, riba da abin da ke bukatar kulawa daga wuri guda.</p></div>
+  <button class="btn gold hero-btn" onclick="openSale()" id="homeSaleBtn">+ Sabuwar Sayarwa</button>
+ </div>
+ <div class="overview-head"><div><h3 id="overviewTitle">Taƙaitaccen Bayanin Kasuwanci</h3><small id="today"></small></div><span class="live-dot" id="liveStatus">● Live</span></div>
+ <div class="aag-metrics">
+  <div class="metric-card sales-m"><div class="metric-icon">↗</div><small id="mSalesLabel">Sayarwa yau</small><strong id="salesToday">₦0</strong><span id="mSalesHint">Abin da aka sayar yau</span></div>
+  <div class="metric-card profit-m"><div class="metric-icon">◆</div><small id="mProfitLabel">Riba yau</small><strong id="profitToday">₦0</strong><span id="mProfitHint">Ribar sayarwa ta yau</span></div>
+  <div class="metric-card cash-m"><div class="metric-icon">₦</div><small id="mCashLabel">Kuɗin da ke hannu</small><strong id="cashAvailable">₦0</strong><span id="mCashHint">Sayarwa − sayen kaya − kashewa</span></div>
+  <div class="metric-card debt-m"><div class="metric-icon">!</div><small id="mDebtLabel">Bashin da ake bi</small><strong id="debtTotal">₦0</strong><span id="mDebtHint">Kuɗin customers da bai shigo ba</span></div>
+ </div>
+ <div class="section-head unique-head"><h3 id="quickTitle">Ayyukan Gaggawa</h3></div>
+ <div class="quick-grid">
+  <button class="quick-card" onclick="openSale()"><span>🛒</span><b id="qSale">Sabuwar Sayarwa</b><small id="qSaleSub">Yi sayarwa yanzu</small></button>
+  <button class="quick-card" onclick="openRestock()"><span>📦</span><b id="qStock">Shigar da Kaya</b><small id="qStockSub">Ƙara stock</small></button>
+  <button class="quick-card" onclick="openCustomer()"><span>👤</span><b id="qCustomer">Ƙara Customer</b><small id="qCustomerSub">Rubuta sabon mai saya</small></button>
+  <button class="quick-card" onclick="openExpense()"><span>💸</span><b id="qExpense">Rubuta Kashewa</b><small id="qExpenseSub">Saka kuɗin da aka kashe</small></button>
+ </div>
+ <div class="home-columns">
+  <div><div class="section-head unique-head"><h3 id="alertsTitle">Abubuwan da ke Bukatar Kulawa</h3><button class="btn light" onclick="show('products')" id="alertsBtn">Duba Kaya</button></div><div class="alert-panel" id="businessAlerts"></div></div>
+  <div><div class="section-head unique-head"><h3 id="perfTitle">Aikin Kasuwanci</h3></div><div class="performance-card"><div><small id="perfSales">Jimillar Sayarwa</small><b id="monthSales">₦0</b></div><div><small id="perfProfit">Jimillar Riba</small><b id="monthProfit">₦0</b></div><div><small id="perfPurchases">Sayen Kaya</small><b id="monthPurchases">₦0</b></div></div></div>
  </div>
 </section>
 
@@ -174,13 +124,13 @@ const navItems=[['dashboard','Dashboard'],['products','📦 Products'],['sales',
 const LANG_KEY='aag_language';
 let lang=localStorage.getItem(LANG_KEY)||'ha';
 const L={
- ha:{tagline:'V1.5 • Kasuwanci cikin sauƙi',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',privacy:'Yanayin Ɓoye Kuɗi',receive:'Abin da ake Bin Ka',give:'Abin da Kake Bi',salesMonth:'Sayarwa',purchaseMonth:'Sayen Kaya',expenseMonth:'Kashe-kashe',balance:'Jimillar Kuɗi',cashBank:'Kuɗi / Banki',explore:'Duba Ayyukan App',quickEntry:'Shigar da Sauri',quickPos:'POS na Sauri',reports:'Duba Rahotanni',shortcuts:'Gajerun Hanyoyi',party:'Ƙara Mutum',invoice:'Rasitin Sayarwa',paymentIn:'Karɓar Kuɗi',paymentOut:'Fitar da Kuɗi',purchase:'Sayi Kaya',item:'Ƙara Kaya',expense:'Kashe Kuɗi',note:'Ƙara Bayani',salesReturn:'Mayar da Kaya',cashflow:'Gudun Kuɗi',daily:'Kullum',noCustomersForPayment:'Da farko ka ƙara customer.',noteTitle:'Ƙara Bayani',noteText:'Rubuta bayani',saveNote:'Ajiye Bayani',comingSoon:'Za mu ƙara wannan a gaba.',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
+ ha:{tagline:'V2.1 • Tsarin kasuwanci na AAG',homeEyebrow:'KULA DA KASUWANCI',homeTitle:'Kasuwancinka, a ƙarƙashin iko.',homeSub:'Duba kuɗi, sayarwa, riba da abin da ke bukatar kulawa daga wuri guda.',overviewTitle:'Taƙaitaccen Bayanin Kasuwanci',live:'● Aiki yanzu',cashAvailable:'Kuɗin da ke hannu',cashHint:'Sayarwa − sayen kaya − kashewa',debtHint:'Kuɗin customers da bai shigo ba',salesHint:'Abin da aka sayar yau',profitHint:'Ribar sayarwa ta yau',quickTitle:'Ayyukan Gaggawa',qSale:'Sabuwar Sayarwa',qSaleSub:'Yi sayarwa yanzu',qStock:'Shigar da Kaya',qStockSub:'Ƙara stock',qCustomer:'Ƙara Customer',qCustomerSub:'Rubuta sabon mai saya',qExpense:'Rubuta Kashewa',qExpenseSub:'Saka kuɗin da aka kashe',alertsTitle:'Abubuwan da ke Bukatar Kulawa',alertsBtn:'Duba Kaya',perfTitle:'Aikin Kasuwanci',perfSales:'Jimillar Sayarwa',perfProfit:'Jimillar Riba',perfPurchases:'Sayen Kaya',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
    addProductTitle:'Ƙara Kaya',productName:'Sunan Kaya',stock:'Adadin Kaya',buyPrice:'Farashin Saye',sellPrice:'Farashin Siyarwa',save:'Ajiye',cancel:'Soke',enterProduct:'Shigar da sunan kaya',
    addCustomerTitle:'Ƙara Mai Saye',customerName:'Sunan Mai Saye',phone:'Lambar Waya',addExpenseTitle:'Ƙara Kashewa',description:'Bayani',amount:'Adadi',newSaleTitle:'Sabuwar Sayarwa',quantity:'Yawa',customerOptional:'Sunan Mai Saye (na zaɓi)',paid:'An biya',credit:'Bashi',finishSale:'Kammala Sayarwa',firstAdd:'Da farko ka ƙara kaya.',badQty:'Yawan ya fi stock ko ba daidai ba.',walkIn:'Mai Saye na Wucewa',
    product:'Kaya',stockHead:'Adadi',alert:'Faɗakarwa',buy:'Saye',sell:'Siyarwa',profitUnit:'Ribar Kaya Ɗaya',time:'Lokaci',customer:'Mai Saye',total:'Jimilla',status:'Matsayi',name:'Suna',date:'Rana',
    restock:'Sake Kaya',stockIn:'+ Shigo da Kaya',purchases:'Sayen Kaya',purchaseHistoryBtn:'📋 Tarihin Sayen Kaya',purchasesTitle:'Sayen Kaya',purchaseTotal:'Jimillar Kudin Sayen Kaya',payment:'Biya Bashi',history:'Tarihi Biyan Bashi',paymentHistory:'Tarihin Biyan Bashi',originalDebt:'Jimillar Bashi',paidAmount:'An Biya',remainingDebt:'Ragowar Bashi',receipt:'Rasit',print:'Buga Rasit',close:'Rufe',payDebtTitle:'Biyan Bashi',payAmount:'Adadin Biyan',paidDebt:'An karɓa',noPurchases:'Babu tarihin sayen kaya tukuna.',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
  },
- en:{tagline:'V2 • Simple business management',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',privacy:'Privacy Mode',receive:'To Receive',give:'To Give',salesMonth:'Sales',purchaseMonth:'Purchase',expenseMonth:'Expense',balance:'Total Balance',cashBank:'Cash & Bank',explore:'Explore App',quickEntry:'Quick Entry',quickPos:'Quick POS',reports:'View Reports',shortcuts:'Shortcuts',party:'Add Party',invoice:'Sales Invoice',paymentIn:'Payment In',paymentOut:'Payment Out',purchase:'Purchase',item:'Add Item',expense:'Expense',note:'Add Note',salesReturn:'Sales Return',cashflow:'Cashflow',daily:'Daily',noCustomersForPayment:'Add a customer first.',noteTitle:'Add Note',noteText:'Write a note',saveNote:'Save Note',comingSoon:'We will add this later.',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
+ en:{tagline:'V2.1 • AAG business control',homeEyebrow:'BUSINESS CONTROL',homeTitle:'Your business, under control.',homeSub:'See cash, sales, profit and important tasks from one place.',overviewTitle:'Business Overview',live:'● Live',cashAvailable:'Cash Available',cashHint:'Sales − purchases − expenses',debtHint:'Money still owed by customers',salesHint:'Sales recorded today',profitHint:'Profit earned today',quickTitle:'Quick Actions',qSale:'New Sale',qSaleSub:'Record a sale now',qStock:'Stock In',qStockSub:'Add inventory',qCustomer:'Add Customer',qCustomerSub:'Create a customer',qExpense:'Record Expense',qExpenseSub:'Add business spending',alertsTitle:'Needs Your Attention',alertsBtn:'View Products',perfTitle:'Business Performance',perfSales:'Total Sales',perfProfit:'Total Profit',perfPurchases:'Purchases',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
    addProductTitle:'Add Product',productName:'Product name',stock:'Stock',buyPrice:'Buying price',sellPrice:'Selling price',save:'Save',cancel:'Cancel',enterProduct:'Enter the product name',
    addCustomerTitle:'Add Customer',customerName:'Customer name',phone:'Phone',addExpenseTitle:'Add Expense',description:'Description',amount:'Amount',newSaleTitle:'New Sale',quantity:'Quantity',customerOptional:'Customer name (optional)',paid:'Paid',credit:'Credit',finishSale:'Complete Sale',firstAdd:'Please add products first.',badQty:'Quantity is greater than stock or invalid.',walkIn:'Walk-in',
    product:'Product',stockHead:'Stock',alert:'Alert',buy:'Buy',sell:'Sell',profitUnit:'Profit/Unit',time:'Time',customer:'Customer',total:'Total',status:'Status',name:'Name',date:'Date',
@@ -248,48 +198,23 @@ function addSale(){
 function openReceipt(id){const t=L[lang],s=db.sales.find(x=>x.id==id);if(!s)return;modal(`<div id="receiptBox" style="padding:8px;background:#fff"><div style="text-align:center"><b style="font-size:20px">AAG BusinessBook</b><div>${t.receipt}</div></div><hr><p><b>${t.date}:</b> ${new Date(s.date).toLocaleString(lang==='ha'?'ha-NG':'en-NG')}</p><p><b>${t.customer}:</b> ${s.customer}</p><p><b>${t.product}:</b> ${s.product||'-'}</p><p><b>${t.quantity}:</b> ${s.qty||'-'}</p><p><b>${t.total}:</b> ${money(s.total)}</p><p><b>${t.status}:</b> ${s.status==='paid'?t.paidStatus:t.creditStatus}</p><hr><div class="row"><button class="btn" onclick="printReceipt()">${t.print}</button><button class="btn light" onclick="closeModal()">${t.close}</button></div></div>`)}
 function printReceipt(){const box=document.getElementById('receiptBox');if(!box)return;const w=window.open('','_blank');w.document.write('<html><head><title>AAG Receipt</title><style>body{font-family:Arial;padding:20px;max-width:360px;margin:auto}hr{border:0;border-top:1px solid #ddd}</style></head><body>'+box.innerHTML.replace(/<div class="row"[\s\S]*?<\/div>\s*<\/div>$/,'')+'</body></html>');w.document.close();w.focus();w.print()}
 function modal(x){document.getElementById('modalBody').innerHTML=x;document.getElementById('modal').classList.add('open')}
-
-let privacyMode=localStorage.getItem('aag_privacy')==='1';
-let homeNotes=JSON.parse(localStorage.getItem('aag_home_notes')||'[]');
-
-function togglePrivacy(){privacyMode=!privacyMode;localStorage.setItem('aag_privacy',privacyMode?'1':'0');renderHomeV2();}
-function homeMoney(n){return privacyMode?'₦XXXX':money(n)}
-function renderHomeV2(){
- const now=new Date(), y=now.getFullYear(), m=now.getMonth();
- const monthSales=db.sales.filter(x=>{let d=new Date(x.date);return d.getFullYear()===y&&d.getMonth()===m}).reduce((a,x)=>a+x.total,0);
- const monthPurchases=db.purchases.filter(x=>{let d=new Date(x.date);return d.getFullYear()===y&&d.getMonth()===m}).reduce((a,x)=>a+x.total,0);
- const monthExpenses=db.expenses.filter(x=>{let d=new Date(x.date);return d.getFullYear()===y&&d.getMonth()===m}).reduce((a,x)=>a+x.amount,0);
- const receive=db.customers.reduce((a,c)=>a+(c.debt||0),0);
- const debtPaid=db.paymentHistory.reduce((a,x)=>a+(x.amount||0),0);
- const paidSales=db.sales.filter(x=>x.status==='paid').reduce((a,x)=>a+x.total,0);
- const balance=paidSales+debtPaid-monthPurchases-monthExpenses;
- const vals={receiveValue:receive,giveValue:0,monthSales,monthPurchases,monthExpenses,balanceValue:balance};
- Object.entries(vals).forEach(([id,v])=>{let e=document.getElementById(id);if(e)e.textContent=homeMoney(v)});
- const sw=document.getElementById('privacySwitch'); if(sw)sw.classList.toggle('on',privacyMode);
- const label=document.getElementById('monthSalesLabel');if(label)label.textContent=(lang==='ha'?L.ha.salesMonth:L.en.salesMonth)+' ('+now.toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{month:'long'})+')';
- const pl=document.getElementById('monthPurchasesLabel');if(pl)pl.textContent=(lang==='ha'?L.ha.purchaseMonth:L.en.purchaseMonth)+' ('+now.toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{month:'long'})+')';
- const el=document.getElementById('monthExpensesLabel');if(el)el.textContent=(lang==='ha'?L.ha.expenseMonth:L.en.expenseMonth)+' ('+now.toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{month:'long'})+')';
- renderCashflow();
-}
-function renderCashflow(){
- const chart=document.getElementById('cashflowChart'), labels=document.getElementById('cashflowLabels'); if(!chart||!labels)return;
- const days=[];for(let i=6;i>=0;i--){let d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);days.push(d)}
- const data=days.map(d=>{const k=dateKey(d);const ins=db.sales.filter(s=>s.date.slice(0,10)===k&&s.status==='paid').reduce((a,s)=>a+s.total,0)+db.paymentHistory.filter(p=>p.date&&p.date.slice(0,10)===k).reduce((a,p)=>a+p.amount,0);const outs=db.expenses.filter(e=>e.date===k).reduce((a,e)=>a+e.amount,0)+db.purchases.filter(p=>p.date.slice(0,10)===k).reduce((a,p)=>a+p.total,0);return {ins,outs}});
- const max=Math.max(1,...data.flatMap(x=>[x.ins,x.outs]));
- chart.innerHTML=data.map(x=>`<div class="cf-day"><div class="cf-bar" title="${money(x.ins)}" style="height:${Math.max(3,x.ins/max*100)}%"></div><div class="cf-bar out" title="${money(x.outs)}" style="height:${Math.max(3,x.outs/max*100)}%"></div></div>`).join('');
- labels.innerHTML=days.map(d=>`<span>${d.toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'short'}).slice(0,3)}</span>`).join('');
-}
-function openQuickEntry(){const t=L[lang];modal(`<h3>${t.quickEntry}</h3><div class="row"><button class="btn gold" onclick="closeModal();openSale()">🧾 ${t.invoice}</button><button class="btn" onclick="closeModal();openRestock()">🛒 ${t.purchase}</button><button class="btn light" onclick="closeModal();openExpense()">💸 ${t.expense}</button><button class="btn light" onclick="closeModal();openProduct()">📦 ${t.item}</button></div>`)}
-function openPaymentIn(){if(!db.customers.length)return alert(L[lang].noCustomersForPayment);modal(`<h3>${L[lang].paymentIn}</h3><p>${L[lang].comingSoon}</p><button class="btn light" onclick="closeModal()">${L[lang].close}</button>`)}
-function openPaymentOut(){openExpense()}
-function openNote(){const t=L[lang];modal(`<h3>${t.noteTitle}</h3><textarea id="noteText" class="input" rows="5" placeholder="${t.noteText}"></textarea><div class="row" style="margin-top:12px"><button class="btn" onclick="saveNote()">${t.saveNote}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
-function saveNote(){const v=document.getElementById('noteText').value.trim();if(v){homeNotes.push({text:v,date:new Date().toISOString()});localStorage.setItem('aag_home_notes',JSON.stringify(homeNotes));}closeModal()}
-function openSalesReturn(){alert(L[lang].comingSoon)}
-
 function render(){
  const t=L[lang];
- renderHomeV2();
  document.getElementById('today').textContent=new Date().toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+ const monthKey=new Date().toISOString().slice(0,7);
+ const monthSalesData=db.sales.filter(x=>x.date&&x.date.slice(0,7)===monthKey);
+ const monthSalesTotal=monthSalesData.reduce((a,x)=>a+x.total,0);
+ const monthProfitTotal=monthSalesData.reduce((a,x)=>a+x.profit,0);
+ const monthPurchaseTotal=db.purchases.filter(x=>x.date&&x.date.slice(0,7)===monthKey).reduce((a,x)=>a+(x.total||0),0);
+ const expensesTotal=db.expenses.filter(x=>x.date&&x.date.slice(0,7)===monthKey).reduce((a,x)=>a+(x.amount||0),0);
+ const cashAvailable=Math.max(0,monthSalesTotal-monthPurchaseTotal-expensesTotal);
+ document.getElementById('cashAvailable').textContent=money(cashAvailable);
+ document.getElementById('monthSales').textContent=money(monthSalesTotal);
+ document.getElementById('monthProfit').textContent=money(monthProfitTotal);
+ document.getElementById('monthPurchases').textContent=money(monthPurchaseTotal);
+ const low=db.products.filter(p=>p.stock<=10);
+ const debtCustomers=db.customers.filter(c=>(c.debt||0)>0);
+ document.getElementById('businessAlerts').innerHTML=(low.length?`<div class="alert-item"><span class="ai">📦</span><div><b>${t.lowStock}</b><small>${low.length} ${lang==='ha'?'kayan da suke kusa ƙarewa':'product(s) running low'}</small></div></div>`:'')+(debtCustomers.length?`<div class="alert-item"><span class="ai">💳</span><div><b>${t.debt}</b><small>${debtCustomers.length} ${lang==='ha'?'customer(s) suna da bashi':'customer(s) have outstanding debt'}</small></div></div>`:'')+((!low.length&&!debtCustomers.length)?`<div class="no-alert">${lang==='ha'?'Babu wani abu mai gaggawa a yanzu. Kasuwanci yana tafiya lafiya.':'Nothing needs attention right now. Your business is running smoothly.'}</div>`:'');
  let todaySales=db.sales.filter(x=>x.date.slice(0,10)===dateKey()), st=todaySales.reduce((a,x)=>a+x.total,0), pt=todaySales.reduce((a,x)=>a+x.profit,0);
  document.getElementById('salesToday').textContent=money(st);document.getElementById('profitToday').textContent=money(pt);document.getElementById('debtTotal').textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));document.getElementById('productCount').textContent=db.products.length;
 
@@ -333,23 +258,6 @@ function applyLang(){
  const t=L[lang];
  document.getElementById('langSwitch').value=lang;
  document.getElementById('tagline').textContent=t.tagline;
- document.getElementById('homeTitle').textContent=t.dashTitle;
- document.getElementById('homeNewSale').textContent=t.newSale;
- document.getElementById('privacyLabel').textContent=t.privacy;
- document.getElementById('receiveLabel').textContent=t.receive+' ↓';
- document.getElementById('giveLabel').textContent=t.give+' ↑';
- document.getElementById('balanceLabel').textContent=t.balance+' · '+t.cashBank;
- document.getElementById('exploreTitle').textContent=t.explore;
- document.getElementById('quickEntryLabel').textContent=t.quickEntry;
- document.getElementById('quickPosLabel').textContent=t.quickPos;
- document.getElementById('reportsLabel').textContent=t.reports;
- document.getElementById('shortcutsTitle').textContent=t.shortcuts;
- document.getElementById('scParty').textContent=t.party;document.getElementById('scInvoice').textContent=t.invoice;
- document.getElementById('scIn').textContent=t.paymentIn;document.getElementById('scOut').textContent=t.paymentOut;
- document.getElementById('scPurchase').textContent=t.purchase;document.getElementById('scItem').textContent=t.item;
- document.getElementById('scExpense').textContent=t.expense;document.getElementById('scNote').textContent=t.note;document.getElementById('scReturn').textContent=t.salesReturn;
- document.getElementById('cashflowTitle').innerHTML=t.cashflow+' <span style="font-weight:400;color:var(--muted)">('+(lang==='ha'?'Kwanaki 7 da suka wuce':'Last 7 Days')+')</span>';
-
  document.querySelectorAll('#bottomNav [data-ha]').forEach(el=>el.textContent=lang==='ha'?el.dataset.ha:el.dataset.en);
  const navBtns=document.querySelectorAll('#nav button');
  [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.purchases,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
@@ -365,6 +273,10 @@ function applyLang(){
  document.querySelector('#expenses h2').textContent=t.expensesTitle;document.querySelector('#expenses .btn.gold').textContent=t.addExpense;
  document.querySelector('#purchases h2').textContent=t.purchasesTitle; document.querySelector('#purchases .btn.gold').textContent=t.stockIn; document.getElementById('purchaseTotalLabel').textContent=t.purchaseTotal;
  document.querySelector('#profit h2').textContent=t.pnl;
+ document.getElementById('homeEyebrow').textContent=t.homeEyebrow;document.getElementById('homeTitle').textContent=t.homeTitle;document.getElementById('homeSub').textContent=t.homeSub;document.getElementById('overviewTitle').textContent=t.overviewTitle;document.getElementById('liveStatus').textContent=t.live;
+ const ids=['mSalesLabel','mProfitLabel','mCashLabel','mDebtLabel'];[t.salesToday,t.profitToday,t.cashAvailable,t.debt].forEach((x,i)=>document.getElementById(ids[i]).textContent=x);
+ document.getElementById('mSalesHint').textContent=t.salesHint;document.getElementById('mProfitHint').textContent=t.profitHint;document.getElementById('mCashHint').textContent=t.cashHint;document.getElementById('mDebtHint').textContent=t.debtHint;
+ document.getElementById('homeSaleBtn').textContent=t.newSale;document.getElementById('quickTitle').textContent=t.quickTitle;document.getElementById('qSale').textContent=t.qSale;document.getElementById('qSaleSub').textContent=t.qSaleSub;document.getElementById('qStock').textContent=t.qStock;document.getElementById('qStockSub').textContent=t.qStockSub;document.getElementById('qCustomer').textContent=t.qCustomer;document.getElementById('qCustomerSub').textContent=t.qCustomerSub;document.getElementById('qExpense').textContent=t.qExpense;document.getElementById('qExpenseSub').textContent=t.qExpenseSub;document.getElementById('alertsTitle').textContent=t.alertsTitle;document.getElementById('alertsBtn').textContent=t.alertsBtn;document.getElementById('perfTitle').textContent=t.perfTitle;document.getElementById('perfSales').textContent=t.perfSales;document.getElementById('perfProfit').textContent=t.perfProfit;document.getElementById('perfPurchases').textContent=t.perfPurchases;
  const pstats=document.querySelectorAll('#profit .stat small');
  [t.totalSales,t.grossProfit,t.exp,t.netProfit].forEach((x,i)=>{if(pstats[i])pstats[i].textContent=x});
  render();
