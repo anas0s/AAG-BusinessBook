@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b3b2e">
-<title>AAG BusinessBook V1</title>
+<title>AAG BusinessBook V1.5</title>
 <style>
 :root{--g:#0b3b2e;--g2:#145943;--gold:#d9ad45;--bg:#f5f7f6;--card:#fff;--text:#17211d;--muted:#6b7771;--danger:#c0392b}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -55,7 +55,7 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 </section>
 
 <section id="products" class="view">
- <div class="section-head"><h2>Products / Stock</h2><button class="btn gold" onclick="openProduct()">+ Ƙara kaya</button></div>
+ <div class="section-head"><h2>Products / Stock</h2><div class="row"><button class="btn gold" onclick="openProduct()">+ Ƙara kaya</button><button class="btn light" onclick="openRestock()">+ Shigo da Kaya</button></div></div>
  <div class="card tablewrap"><table class="table"><thead><tr><th>Product</th><th>Stock</th><th>Buy</th><th>Sell</th><th>Riba/unit</th></tr></thead><tbody id="productsTable"></tbody></table></div>
 </section>
 
@@ -74,6 +74,11 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
  <div class="card tablewrap"><table class="table"><thead><tr><th>Bayani</th><th>Amount</th><th>Rana</th></tr></thead><tbody id="expensesTable"></tbody></table></div>
 </section>
 
+<section id="purchases" class="view">
+ <div class="section-head"><h2>Sayen Kaya</h2></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Kaya</th><th>Yawa</th><th>Farashi</th><th>Jimilla</th><th>Rana</th></tr></thead><tbody id="purchasesTable"></tbody></table></div>
+</section>
+
 <section id="profit" class="view">
  <div class="section-head"><h2>Profit & Loss</h2></div>
  <div class="grid">
@@ -89,22 +94,24 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 <div id="modal" class="modal"><div class="sheet"><div id="modalBody"></div></div></div>
 <script>
 const KEY='aag_businessbook_v1';
-let db=JSON.parse(localStorage.getItem(KEY)||'null')||{products:[],sales:[],customers:[],expenses:[]};
-const navItems=[['dashboard','Dashboard'],['products','📦 Products'],['sales','🛒 Sales'],['customers','👥 Customers'],['expenses','💸 Expenses'],['profit','📈 Profit']];
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{products:[],sales:[],customers:[],expenses:[],purchases:[]};
+db.purchases=db.purchases||[];
+db.sales=db.sales||[];db.customers=db.customers||[];db.expenses=db.expenses||[];db.products=db.products||[];
+const navItems=[['dashboard','Dashboard'],['products','📦 Products'],['sales','🛒 Sales'],['customers','👥 Customers'],['expenses','💸 Expenses'],['purchases','🚚 Purchases'],['profit','📈 Profit']];
 const LANG_KEY='aag_language';
 let lang=localStorage.getItem(LANG_KEY)||'ha';
 const L={
- ha:{tagline:'V1 • Kasuwanci cikin sauƙi',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
+ ha:{tagline:'V1.5 • Kasuwanci cikin sauƙi',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
    addProductTitle:'Ƙara Kaya',productName:'Sunan Kaya',stock:'Adadin Kaya',buyPrice:'Farashin Saye',sellPrice:'Farashin Siyarwa',save:'Ajiye',cancel:'Soke',enterProduct:'Shigar da sunan kaya',
    addCustomerTitle:'Ƙara Mai Saye',customerName:'Sunan Mai Saye',phone:'Lambar Waya',addExpenseTitle:'Ƙara Kashewa',description:'Bayani',amount:'Adadi',newSaleTitle:'Sabuwar Sayarwa',quantity:'Yawa',customerOptional:'Sunan Mai Saye (na zaɓi)',paid:'An biya',credit:'Bashi',finishSale:'Kammala Sayarwa',firstAdd:'Da farko ka ƙara kaya.',badQty:'Yawan ya fi stock ko ba daidai ba.',walkIn:'Mai Saye na Wucewa',
    product:'Kaya',stockHead:'Adadi',alert:'Faɗakarwa',buy:'Saye',sell:'Siyarwa',profitUnit:'Ribar Kaya Ɗaya',time:'Lokaci',customer:'Mai Saye',total:'Jimilla',status:'Matsayi',name:'Suna',date:'Rana',
-   restock:'Sake Kaya',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
+   restock:'Sake Kaya',stockIn:'+ Shigo da Kaya',purchases:'Sayen Kaya',purchasesTitle:'Sayen Kaya',payment:'Biya Bashi',receipt:'Rasit',print:'Buga Rasit',close:'Rufe',payDebtTitle:'Biyan Bashi',payAmount:'Adadin Biyan',paidDebt:'An karɓa',noPurchases:'Babu tarihin sayen kaya tukuna.',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
  },
- en:{tagline:'V1 • Simple business management',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
+ en:{tagline:'V1.5 • Simple business management',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
    addProductTitle:'Add Product',productName:'Product name',stock:'Stock',buyPrice:'Buying price',sellPrice:'Selling price',save:'Save',cancel:'Cancel',enterProduct:'Enter the product name',
    addCustomerTitle:'Add Customer',customerName:'Customer name',phone:'Phone',addExpenseTitle:'Add Expense',description:'Description',amount:'Amount',newSaleTitle:'New Sale',quantity:'Quantity',customerOptional:'Customer name (optional)',paid:'Paid',credit:'Credit',finishSale:'Complete Sale',firstAdd:'Please add products first.',badQty:'Quantity is greater than stock or invalid.',walkIn:'Walk-in',
    product:'Product',stockHead:'Stock',alert:'Alert',buy:'Buy',sell:'Sell',profitUnit:'Profit/Unit',time:'Time',customer:'Customer',total:'Total',status:'Status',name:'Name',date:'Date',
-   restock:'Restock',noLow:'No low-stock products now.',noProducts:'No products yet. Tap “+ Add product”.',noSales:'No sales yet.',noCustomers:'No customers yet.',noExpenses:'No expenses yet.',paidStatus:'Paid',creditStatus:'Credit',home:'Home',sellNav:'Sell'
+   restock:'Stock In',stockIn:'+ Stock In',purchases:'Purchases',purchasesTitle:'Purchases',payment:'Pay Debt',receipt:'Receipt',print:'Print Receipt',close:'Close',payDebtTitle:'Debt Payment',payAmount:'Payment amount',paidDebt:'Payment received',noPurchases:'No purchase history yet.',noLow:'No low-stock products now.',noProducts:'No products yet. Tap “+ Add product”.',noSales:'No sales yet.',noCustomers:'No customers yet.',noExpenses:'No expenses yet.',paidStatus:'Paid',creditStatus:'Credit',home:'Home',sellNav:'Sell'
  }
 };
 
@@ -128,8 +135,15 @@ function openProduct(){
  </div><div class="row" style="margin-top:12px"><button class="btn" onclick="addProduct()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
 function addProduct(){let n=pn.value.trim(),s=+ps.value,b=+pb.value,v=+pv.value;if(!n)return alert(lang==='ha'?'Shigar da sunan kaya':'Enter the product name');db.products.push({id:Date.now(),name:n,stock:s,buy:b,sell:v});save();closeModal()}
+function openRestock(){
+ const t=L[lang]; if(!db.products.length)return alert(t.firstAdd);
+ modal(`<h3>${t.stockIn}</h3><select id="rp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.buy)}</option>`).join('')}</select><br><input id="rq" class="input" type="number" min="1" value="1" placeholder="${t.quantity}"><br><input id="rc" class="input" type="number" min="0" placeholder="${t.buyPrice}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addRestock()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
+}
+function addRestock(){let p=db.products.find(x=>x.id==+rp.value),q=+rq.value,c=+rc.value||p.buy;if(!p||q<1)return; p.stock+=q;p.buy=c;db.purchases.push({id:Date.now(),date:new Date().toISOString(),product:p.name,qty:q,cost:c,total:q*c});save();closeModal()}
 function openCustomer(){const t=L[lang];modal(`<h3>${t.addCustomerTitle}</h3><input id="cn" class="input" placeholder="${t.customerName}"><br><input id="cp" class="input" placeholder="${t.phone}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addCustomer()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
 function addCustomer(){let n=cn.value.trim(),p=cp.value.trim();if(!n)return;db.customers.push({id:Date.now(),name:n,phone:p,debt:0});save();closeModal()}
+function openDebtPayment(id){const t=L[lang],c=db.customers.find(x=>x.id==id);if(!c)return;modal(`<h3>${t.payDebtTitle}</h3><p><b>${c.name}</b><br>${t.debt}: ${money(c.debt)}</p><input id="pa" class="input" type="number" min="1" max="${c.debt}" placeholder="${t.payAmount}"><div class="row" style="margin-top:12px"><button class="btn" onclick="payDebt(${id})">${t.paidDebt}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
+function payDebt(id){let c=db.customers.find(x=>x.id==id),a=+pa.value;if(!c||a<=0)return;if(a>c.debt)a=c.debt;c.debt-=a;save();closeModal()}
 function openExpense(){const t=L[lang];modal(`<h3>${t.addExpenseTitle}</h3><input id="ed" class="input" placeholder="${t.description}"><br><input id="ea" class="input" type="number" placeholder="${t.amount}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addExpense()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
 function addExpense(){let d=ed.value.trim(),a=+ea.value;if(!d||!a)return;db.expenses.push({id:Date.now(),desc:d,amount:a,date:dateKey()});save();closeModal()}
 function openSale(){
@@ -146,8 +160,11 @@ function addSale(){
  if(!p||q<1||q>p.stock)return alert(t.badQty);
  let total=p.sell*q,profit=(p.sell-p.buy)*q;p.stock-=q;
  if(status==='credit'){let cu=db.customers.find(x=>x.name.toLowerCase()===c.toLowerCase());if(cu)cu.debt+=total;else db.customers.push({id:Date.now(),name:c,phone:'',debt:total})}
- db.sales.push({id:Date.now(),date:new Date().toISOString(),customer:c,total,profit,status});save();closeModal()
+ const sale={id:Date.now(),date:new Date().toISOString(),customer:c,product:p.name,qty:q,unitPrice:p.sell,total,profit,status};
+ db.sales.push(sale);save();closeModal();openReceipt(sale.id)
 }
+function openReceipt(id){const t=L[lang],s=db.sales.find(x=>x.id==id);if(!s)return;modal(`<div id="receiptBox" style="padding:8px;background:#fff"><div style="text-align:center"><b style="font-size:20px">AAG BusinessBook</b><div>${t.receipt}</div></div><hr><p><b>${t.date}:</b> ${new Date(s.date).toLocaleString(lang==='ha'?'ha-NG':'en-NG')}</p><p><b>${t.customer}:</b> ${s.customer}</p><p><b>${t.product}:</b> ${s.product||'-'}</p><p><b>${t.quantity}:</b> ${s.qty||'-'}</p><p><b>${t.total}:</b> ${money(s.total)}</p><p><b>${t.status}:</b> ${s.status==='paid'?t.paidStatus:t.creditStatus}</p><hr><div class="row"><button class="btn" onclick="printReceipt()">${t.print}</button><button class="btn light" onclick="closeModal()">${t.close}</button></div></div>`)}
+function printReceipt(){const box=document.getElementById('receiptBox');if(!box)return;const w=window.open('','_blank');w.document.write('<html><head><title>AAG Receipt</title><style>body{font-family:Arial;padding:20px;max-width:360px;margin:auto}hr{border:0;border-top:1px solid #ddd}</style></head><body>'+box.innerHTML.replace(/<div class="row"[\s\S]*?<\/div>\s*<\/div>$/,'')+'</body></html>');w.document.close();w.focus();w.print()}
 function modal(x){modalBody.innerHTML=x;document.getElementById('modal').classList.add('open')}
 function render(){
  today.textContent=new Date().toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -161,14 +178,16 @@ function render(){
  productsTable.innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
  `<tr><td colspan="5" class="empty">${ha?L.ha.noProducts:L.en.noProducts}</td></tr>`;
 
- salesTable.innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td></tr>`).join('')||
- `<tr><td colspan="5" class="empty">${ha?L.ha.noSales:L.en.noSales}</td></tr>`;
+ salesTable.innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td><td><button class="btn light" onclick="openReceipt(${s.id})">${t.receipt}</button></td></tr>`).join('')||
+ `<tr><td colspan="6" class="empty">${ha?L.ha.noSales:L.en.noSales}</td></tr>`;
 
- customersTable.innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td></tr>`).join('')||
- `<tr><td colspan="3" class="empty">${ha?L.ha.noCustomers:L.en.noCustomers}</td></tr>`;
+ customersTable.innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td><td>${c.debt?`<button class="btn light" onclick="openDebtPayment(${c.id})">${t.payment}</button>`:'-'}</td></tr>`).join('')||
+ `<tr><td colspan="4" class="empty">${ha?L.ha.noCustomers:L.en.noCustomers}</td></tr>`;
 
  expensesTable.innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
  `<tr><td colspan="3" class="empty">${ha?L.ha.noExpenses:L.en.noExpenses}</td></tr>`;
+
+ purchasesTable.innerHTML=db.purchases.slice().reverse().map(x=>`<tr><td>${x.product}</td><td>${x.qty}</td><td>${money(x.cost)}</td><td>${money(x.total)}</td><td>${x.date}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t.noPurchases}</td></tr>`;
 
  let as=db.sales.reduce((a,x)=>a+x.total,0),ap=db.sales.reduce((a,x)=>a+x.profit,0),ae=db.expenses.reduce((a,x)=>a+x.amount,0);
  allSales.textContent=money(as);allProfit.textContent=money(ap);allExpenses.textContent=money(ae);netProfit.textContent=money(ap-ae);
@@ -178,9 +197,10 @@ function updateTableHeaders(){
  const t=L[lang];
  document.querySelector('#lowStock').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.alert}</th></tr>`;
  document.querySelector('#productsTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.buy}</th><th>${t.sell}</th><th>${t.profitUnit}</th></tr>`;
- document.querySelector('#salesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.time}</th><th>${t.customer}</th><th>${t.total}</th><th>${t.profitUnit.replace('Kaya Ɗaya','').replace('Profit/Unit','Profit').trim()}</th><th>${t.status}</th></tr>`;
- document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.name}</th><th>${t.phone}</th><th>${t.debt}</th></tr>`;
- document.querySelector('#expensesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.description}</th><th>${t.amount}</th><th>${t.date}</th></tr>`;
+ document.querySelector('#salesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.time}</th><th>${t.customer}</th><th>${t.total}</th><th>${t.profitUnit.replace('Kaya Ɗaya','').replace('Profit/Unit','Profit').trim()}</th><th>${t.status}</th><th>${t.receipt}</th></tr>`;
+document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.name}</th><th>${t.phone}</th><th>${t.debt}</th><th>${t.payment}</th></tr>`;
+document.querySelector('#purchasesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.quantity}</th><th>${t.buyPrice}</th><th>${t.total}</th><th>${t.date}</th></tr>`;
+  document.querySelector('#expensesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.description}</th><th>${t.amount}</th><th>${t.date}</th></tr>`;
 }
 
 
@@ -193,7 +213,7 @@ function applyLang(){
  tagline.textContent=t.tagline;
  document.querySelectorAll('#bottomNav [data-ha]').forEach(el=>el.textContent=lang==='ha'?el.dataset.ha:el.dataset.en);
  const navBtns=document.querySelectorAll('#nav button');
- [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
+ [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.purchases,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
  document.querySelector('#dashboard h2').textContent=t.dashTitle;
  document.querySelector('#dashboard .btn.gold').textContent=t.newSale;
  const statLabels=document.querySelectorAll('#dashboard .stat small');
@@ -204,6 +224,7 @@ function applyLang(){
  document.querySelector('#sales h2').textContent=t.salesTitle;document.querySelector('#sales .btn.gold').textContent=t.addSale;
  document.querySelector('#customers h2').textContent=t.custDebt;document.querySelector('#customers .btn.gold').textContent=t.addCustomer;
  document.querySelector('#expenses h2').textContent=t.expensesTitle;document.querySelector('#expenses .btn.gold').textContent=t.addExpense;
+ document.querySelector('#purchases h2').textContent=t.purchasesTitle;
  document.querySelector('#profit h2').textContent=t.pnl;
  const pstats=document.querySelectorAll('#profit .stat small');
  [t.totalSales,t.grossProfit,t.exp,t.netProfit].forEach((x,i)=>{if(pstats[i])pstats[i].textContent=x});
