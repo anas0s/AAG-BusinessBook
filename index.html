@@ -134,18 +134,18 @@ function openProduct(){
  <input id="pb" class="input" type="number" placeholder="${t.buyPrice}"><input id="pv" class="input" type="number" placeholder="${t.sellPrice}">
  </div><div class="row" style="margin-top:12px"><button class="btn" onclick="addProduct()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
-function addProduct(){let n=pn.value.trim(),s=+ps.value,b=+pb.value,v=+pv.value;if(!n)return alert(lang==='ha'?'Shigar da sunan kaya':'Enter the product name');db.products.push({id:Date.now(),name:n,stock:s,buy:b,sell:v});save();closeModal()}
+function addProduct(){const n=document.getElementById('pn').value.trim(),s=+document.getElementById('ps').value,b=+document.getElementById('pb').value,v=+document.getElementById('pv').value;if(!n)return alert(lang==='ha'?'Shigar da sunan kaya':'Enter the product name');db.products.push({id:Date.now(),name:n,stock:s,buy:b,sell:v});save();closeModal()}
 function openRestock(){
  const t=L[lang]; if(!db.products.length)return alert(t.firstAdd);
  modal(`<h3>${t.stockIn}</h3><select id="rp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.buy)}</option>`).join('')}</select><br><input id="rq" class="input" type="number" min="1" value="1" placeholder="${t.quantity}"><br><input id="rc" class="input" type="number" min="0" placeholder="${t.buyPrice}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addRestock()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
-function addRestock(){let p=db.products.find(x=>x.id==+rp.value),q=+rq.value,c=+rc.value||p.buy;if(!p||q<1)return; p.stock+=q;p.buy=c;db.purchases.push({id:Date.now(),date:new Date().toISOString(),product:p.name,qty:q,cost:c,total:q*c});save();closeModal()}
+function addRestock(){let p=db.products.find(x=>x.id==+document.getElementById('rp').value),q=+document.getElementById('rq').value,c=+document.getElementById('rc').value||p.buy;if(!p||q<1)return; p.stock+=q;p.buy=c;db.purchases.push({id:Date.now(),date:new Date().toISOString(),product:p.name,qty:q,cost:c,total:q*c});save();closeModal()}
 function openCustomer(){const t=L[lang];modal(`<h3>${t.addCustomerTitle}</h3><input id="cn" class="input" placeholder="${t.customerName}"><br><input id="cp" class="input" placeholder="${t.phone}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addCustomer()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
-function addCustomer(){let n=cn.value.trim(),p=cp.value.trim();if(!n)return;db.customers.push({id:Date.now(),name:n,phone:p,debt:0});save();closeModal()}
+function addCustomer(){let n=document.getElementById('cn').value.trim(),p=document.getElementById('cp').value.trim();if(!n)return;db.customers.push({id:Date.now(),name:n,phone:p,debt:0});save();closeModal()}
 function openDebtPayment(id){const t=L[lang],c=db.customers.find(x=>x.id==id);if(!c)return;modal(`<h3>${t.payDebtTitle}</h3><p><b>${c.name}</b><br>${t.debt}: ${money(c.debt)}</p><input id="pa" class="input" type="number" min="1" max="${c.debt}" placeholder="${t.payAmount}"><div class="row" style="margin-top:12px"><button class="btn" onclick="payDebt(${id})">${t.paidDebt}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
-function payDebt(id){let c=db.customers.find(x=>x.id==id),a=+pa.value;if(!c||a<=0)return;if(a>c.debt)a=c.debt;c.debt-=a;save();closeModal()}
+function payDebt(id){let c=db.customers.find(x=>x.id==id),a=+document.getElementById('pa').value;if(!c||a<=0)return;if(a>c.debt)a=c.debt;c.debt-=a;save();closeModal()}
 function openExpense(){const t=L[lang];modal(`<h3>${t.addExpenseTitle}</h3><input id="ed" class="input" placeholder="${t.description}"><br><input id="ea" class="input" type="number" placeholder="${t.amount}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addExpense()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
-function addExpense(){let d=ed.value.trim(),a=+ea.value;if(!d||!a)return;db.expenses.push({id:Date.now(),desc:d,amount:a,date:dateKey()});save();closeModal()}
+function addExpense(){let d=document.getElementById('ed').value.trim(),a=+document.getElementById('ea').value;if(!d||!a)return;db.expenses.push({id:Date.now(),desc:d,amount:a,date:dateKey()});save();closeModal()}
 function openSale(){
  const t=L[lang];
  if(!db.products.length)return alert(t.firstAdd);
@@ -156,7 +156,7 @@ function openSale(){
  <div class="row" style="margin-top:12px"><button class="btn" onclick="addSale()">${t.finishSale}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
 function addSale(){
- const t=L[lang]; let p=db.products.find(x=>x.id==+sp.value),q=+sq.value,c=sc.value.trim()||t.walkIn,status=sm.value;
+ const t=L[lang]; let p=db.products.find(x=>x.id==+document.getElementById('sp').value),q=+document.getElementById('sq').value,c=document.getElementById('sc').value.trim()||t.walkIn,status=document.getElementById('sm').value;
  if(!p||q<1||q>p.stock)return alert(t.badQty);
  let total=p.sell*q,profit=(p.sell-p.buy)*q;p.stock-=q;
  if(status==='credit'){let cu=db.customers.find(x=>x.name.toLowerCase()===c.toLowerCase());if(cu)cu.debt+=total;else db.customers.push({id:Date.now(),name:c,phone:'',debt:total})}
@@ -165,32 +165,33 @@ function addSale(){
 }
 function openReceipt(id){const t=L[lang],s=db.sales.find(x=>x.id==id);if(!s)return;modal(`<div id="receiptBox" style="padding:8px;background:#fff"><div style="text-align:center"><b style="font-size:20px">AAG BusinessBook</b><div>${t.receipt}</div></div><hr><p><b>${t.date}:</b> ${new Date(s.date).toLocaleString(lang==='ha'?'ha-NG':'en-NG')}</p><p><b>${t.customer}:</b> ${s.customer}</p><p><b>${t.product}:</b> ${s.product||'-'}</p><p><b>${t.quantity}:</b> ${s.qty||'-'}</p><p><b>${t.total}:</b> ${money(s.total)}</p><p><b>${t.status}:</b> ${s.status==='paid'?t.paidStatus:t.creditStatus}</p><hr><div class="row"><button class="btn" onclick="printReceipt()">${t.print}</button><button class="btn light" onclick="closeModal()">${t.close}</button></div></div>`)}
 function printReceipt(){const box=document.getElementById('receiptBox');if(!box)return;const w=window.open('','_blank');w.document.write('<html><head><title>AAG Receipt</title><style>body{font-family:Arial;padding:20px;max-width:360px;margin:auto}hr{border:0;border-top:1px solid #ddd}</style></head><body>'+box.innerHTML.replace(/<div class="row"[\s\S]*?<\/div>\s*<\/div>$/,'')+'</body></html>');w.document.close();w.focus();w.print()}
-function modal(x){modalBody.innerHTML=x;document.getElementById('modal').classList.add('open')}
+function modal(x){document.getElementById('modalBody').innerHTML=x;document.getElementById('modal').classList.add('open')}
 function render(){
- today.textContent=new Date().toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+ const t=L[lang];
+ document.getElementById('today').textContent=new Date().toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
  let todaySales=db.sales.filter(x=>x.date.slice(0,10)===dateKey()), st=todaySales.reduce((a,x)=>a+x.total,0), pt=todaySales.reduce((a,x)=>a+x.profit,0);
- salesToday.textContent=money(st);profitToday.textContent=money(pt);debtTotal.textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));productCount.textContent=db.products.length;
+ document.getElementById('salesToday').textContent=money(st);document.getElementById('profitToday').textContent=money(pt);document.getElementById('debtTotal').textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));document.getElementById('productCount').textContent=db.products.length;
 
  const ha=lang==='ha';
- lowStock.innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?L.ha.restock:L.en.restock}</span></td></tr>`).join('')||
+ document.getElementById('lowStock').innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?L.ha.restock:L.en.restock}</span></td></tr>`).join('')||
  `<tr><td colspan="3" class="empty">${ha?L.ha.noLow:L.en.noLow}</td></tr>`;
 
- productsTable.innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
+ document.getElementById('productsTable').innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
  `<tr><td colspan="5" class="empty">${ha?L.ha.noProducts:L.en.noProducts}</td></tr>`;
 
- salesTable.innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td><td><button class="btn light" onclick="openReceipt(${s.id})">${t.receipt}</button></td></tr>`).join('')||
+ document.getElementById('salesTable').innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td><td><button class="btn light" onclick="openReceipt(${s.id})">${t.receipt}</button></td></tr>`).join('')||
  `<tr><td colspan="6" class="empty">${ha?L.ha.noSales:L.en.noSales}</td></tr>`;
 
- customersTable.innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td><td>${c.debt?`<button class="btn light" onclick="openDebtPayment(${c.id})">${t.payment}</button>`:'-'}</td></tr>`).join('')||
+ document.getElementById('customersTable').innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td><td>${c.debt?`<button class="btn light" onclick="openDebtPayment(${c.id})">${t.payment}</button>`:'-'}</td></tr>`).join('')||
  `<tr><td colspan="4" class="empty">${ha?L.ha.noCustomers:L.en.noCustomers}</td></tr>`;
 
- expensesTable.innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
+ document.getElementById('expensesTable').innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
  `<tr><td colspan="3" class="empty">${ha?L.ha.noExpenses:L.en.noExpenses}</td></tr>`;
 
- purchasesTable.innerHTML=db.purchases.slice().reverse().map(x=>`<tr><td>${x.product}</td><td>${x.qty}</td><td>${money(x.cost)}</td><td>${money(x.total)}</td><td>${x.date}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t.noPurchases}</td></tr>`;
+ document.getElementById('purchasesTable').innerHTML=db.purchases.slice().reverse().map(x=>`<tr><td>${x.product}</td><td>${x.qty}</td><td>${money(x.cost)}</td><td>${money(x.total)}</td><td>${x.date}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t.noPurchases}</td></tr>`;
 
  let as=db.sales.reduce((a,x)=>a+x.total,0),ap=db.sales.reduce((a,x)=>a+x.profit,0),ae=db.expenses.reduce((a,x)=>a+x.amount,0);
- allSales.textContent=money(as);allProfit.textContent=money(ap);allExpenses.textContent=money(ae);netProfit.textContent=money(ap-ae);
+ document.getElementById('allSales').textContent=money(as);document.getElementById('allProfit').textContent=money(ap);document.getElementById('allExpenses').textContent=money(ae);document.getElementById('netProfit').textContent=money(ap-ae);
  updateTableHeaders();
 }
 function updateTableHeaders(){
@@ -209,8 +210,8 @@ function setLang(v){
 }
 function applyLang(){
  const t=L[lang];
- langSwitch.value=lang;
- tagline.textContent=t.tagline;
+ document.getElementById('langSwitch').value=lang;
+ document.getElementById('tagline').textContent=t.tagline;
  document.querySelectorAll('#bottomNav [data-ha]').forEach(el=>el.textContent=lang==='ha'?el.dataset.ha:el.dataset.en);
  const navBtns=document.querySelectorAll('#nav button');
  [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.purchases,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
