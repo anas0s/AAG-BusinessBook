@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ha">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3b2e">
+<title>AAG BusinessBook V1</title>
+<style>
+:root{--g:#0b3b2e;--g2:#145943;--gold:#d9ad45;--bg:#f5f7f6;--card:#fff;--text:#17211d;--muted:#6b7771;--danger:#c0392b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:1100px;margin:auto;min-height:100vh}.top{background:linear-gradient(135deg,var(--g),#08281f);color:#fff;padding:18px 18px 22px;position:sticky;top:0;z-index:3}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border:2px solid var(--gold);border-radius:12px;display:grid;place-items:center;font-weight:800;color:var(--gold)}
+.brand b{font-size:18px}.brand small{display:block;color:#c7d8d0;margin-top:3px}
+nav{display:flex;gap:8px;overflow:auto;margin-top:18px}nav button{white-space:nowrap;border:0;border-radius:10px;padding:10px 13px;background:#ffffff16;color:#fff}nav button.active{background:var(--gold);color:#17211d;font-weight:700}
+main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 4px 18px #0b3b2e0d;border:1px solid #e5ebe8}.stat small{color:var(--muted)}.stat strong{display:block;font-size:22px;margin-top:8px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 12px}.btn{border:0;border-radius:11px;padding:11px 14px;background:var(--g);color:#fff;font-weight:700}.btn.gold{background:var(--gold);color:#17211d}.btn.light{background:#e9efec;color:var(--g)}.row{display:flex;gap:10px;flex-wrap:wrap}.input{padding:11px;border:1px solid #d8e1dd;border-radius:10px;width:100%;background:#fff}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}.table th,.table td{padding:12px;border-bottom:1px solid #edf1ef;text-align:left;white-space:nowrap}.table th{background:#f0f5f2;color:#53625b}.pill{padding:5px 8px;border-radius:20px;background:#e8f4ee;color:var(--g);font-size:12px;font-weight:700}.danger{color:var(--danger)}.empty{padding:30px;text-align:center;color:var(--muted)}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:end;justify-content:center;z-index:10}.modal.open{display:flex}.sheet{background:#fff;width:min(620px,100%);border-radius:22px 22px 0 0;padding:20px;max-height:90vh;overflow:auto}.sheet h3{margin-top:0}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.stat strong{font-size:18px}main{padding:12px}}
+
+.bottom-nav{display:none}
+@media(max-width:700px){
+ .app{padding-bottom:78px}
+ .bottom-nav{position:fixed;display:flex;bottom:0;left:0;right:0;height:70px;background:#fff;border-top:1px solid #dfe7e3;box-shadow:0 -5px 20px #00000012;z-index:20;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+ .bottom-nav .bn{border:0;background:transparent;color:#53625b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;font-size:11px}
+ .bottom-nav .bn span{font-size:20px;line-height:24px}
+ .bottom-nav .bn small{font-size:10px}
+ .bottom-nav .bn.active{color:#0b3b2e;font-weight:800}
+ .bottom-nav .bn.sell{width:58px;height:58px;margin-top:-22px;border-radius:50%;background:#d9ad45;color:#17211d;box-shadow:0 5px 15px #0003}
+ .bottom-nav .bn.sell span{font-size:28px}
+ header.top nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <div class="brand"><div class="logo">A</div><div><b>AAG BusinessBook</b><small id="tagline">V1 • Kasuwanci cikin sauƙi</small></div></div>
+    <select id="langSwitch" onchange="setLang(this.value)" style="border:1px solid #d9ad45;background:#fff;color:#0b3b2e;border-radius:10px;padding:9px;font-weight:700">
+      <option value="ha">Hausa</option><option value="en">English</option>
+    </select>
+    </div>
+ <nav id="nav"></nav>
+</header>
+<main>
+<section id="dashboard" class="view active">
+ <div class="section-head"><div><h2 style="margin:0">Dashboard</h2><small id="today"></small></div><button class="btn gold" onclick="openSale()">+ Sabuwar Sale</button></div>
+ <div class="grid">
+  <div class="card stat"><small>Sales yau</small><strong id="salesToday">₦0</strong></div>
+  <div class="card stat"><small>Riba yau</small><strong id="profitToday">₦0</strong></div>
+  <div class="card stat"><small>Bashi</small><strong id="debtTotal">₦0</strong></div>
+  <div class="card stat"><small>Products</small><strong id="productCount">0</strong></div>
+ </div>
+ <div class="section-head"><h3>Low Stock</h3><button class="btn light" onclick="show('products')">Duba kaya</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Kaya</th><th>Stock</th><th>Alert</th></tr></thead><tbody id="lowStock"></tbody></table></div>
+</section>
+
+<section id="products" class="view">
+ <div class="section-head"><h2>Products / Stock</h2><button class="btn gold" onclick="openProduct()">+ Ƙara kaya</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Product</th><th>Stock</th><th>Buy</th><th>Sell</th><th>Riba/unit</th></tr></thead><tbody id="productsTable"></tbody></table></div>
+</section>
+
+<section id="sales" class="view">
+ <div class="section-head"><h2>Sales</h2><button class="btn gold" onclick="openSale()">+ Sale</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Lokaci</th><th>Customer</th><th>Total</th><th>Riba</th><th>Status</th></tr></thead><tbody id="salesTable"></tbody></table></div>
+</section>
+
+<section id="customers" class="view">
+ <div class="section-head"><h2>Customers / Bashi</h2><button class="btn gold" onclick="openCustomer()">+ Customer</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Suna</th><th>Phone</th><th>Bashi</th></tr></thead><tbody id="customersTable"></tbody></table></div>
+</section>
+
+<section id="expenses" class="view">
+ <div class="section-head"><h2>Expenses</h2><button class="btn gold" onclick="openExpense()">+ Expense</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Bayani</th><th>Amount</th><th>Rana</th></tr></thead><tbody id="expensesTable"></tbody></table></div>
+</section>
+
+<section id="profit" class="view">
+ <div class="section-head"><h2>Profit & Loss</h2></div>
+ <div class="grid">
+  <div class="card stat"><small>Total Sales</small><strong id="allSales">₦0</strong></div>
+  <div class="card stat"><small>Gross Profit</small><strong id="allProfit">₦0</strong></div>
+  <div class="card stat"><small>Expenses</small><strong id="allExpenses">₦0</strong></div>
+  <div class="card stat"><small>Net Profit</small><strong id="netProfit">₦0</strong></div>
+ </div>
+</section>
+</main>
+</div>
+
+<div id="modal" class="modal"><div class="sheet"><div id="modalBody"></div></div></div>
+<script>
+const KEY='aag_businessbook_v1';
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{products:[],sales:[],customers:[],expenses:[]};
+const navItems=[['dashboard','Dashboard'],['products','📦 Kaya'],['sales','🛒 Sales'],['customers','👥 Customers'],['expenses','💸 Expenses'],['profit','📈 Riba']];
+document.getElementById('nav').innerHTML=navItems.map(([id,t],i)=>`<button class="${i?'':'active'}" onclick="show('${id}',this)">${t}</button>`).join('');
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function money(n){return '₦'+Number(n||0).toLocaleString('en-NG',{maximumFractionDigits:2})}
+function dateKey(d=new Date()){return d.toISOString().slice(0,10)}
+function show(id,btn){
+ document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');else{let i=navItems.findIndex(x=>x[0]==id);document.querySelectorAll('nav button')[i]?.classList.add('active')}
+ document.querySelectorAll('#bottomNav .bn').forEach(x=>x.classList.remove('active'));
+ const bi={dashboard:0,products:1,sales:3,customers:4}; if(bi[id]!==undefined) document.querySelectorAll('#bottomNav .bn')[bi[id]]?.classList.add('active');
+ render();
+}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function openProduct(){
+ const ha=lang==='ha';
+ modal(`<h3>${ha?'Ƙara Kaya':'Add Product'}</h3><div class="formgrid">
+ <input id="pn" class="input" placeholder="${ha?'Sunan Kaya':'Product name'}"><input id="ps" class="input" type="number" placeholder="${ha?'Adadin Kaya':'Stock'}">
+ <input id="pb" class="input" type="number" placeholder="${ha?'Farashin Saye':'Buying price'}"><input id="pv" class="input" type="number" placeholder="${ha?'Farashin Siyarwa':'Selling price'}">
+ </div><div class="row" style="margin-top:12px"><button class="btn" onclick="addProduct()">${ha?'Ajiye':'Save'}</button><button class="btn light" onclick="closeModal()">${ha?'Soke':'Cancel'}</button></div>`)
+}
+function addProduct(){let n=pn.value.trim(),s=+ps.value,b=+pb.value,v=+pv.value;if(!n)return alert(lang==='ha'?'Shigar da sunan kaya':'Enter the product name');db.products.push({id:Date.now(),name:n,stock:s,buy:b,sell:v});save();closeModal()}
+function openCustomer(){modal(`<h3>Ƙara Customer</h3><input id="cn" class="input" placeholder="Sunan customer"><br><input id="cp" class="input" placeholder="Phone"><div class="row" style="margin-top:12px"><button class="btn" onclick="addCustomer()">Ajiye</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)}
+function addCustomer(){let n=cn.value.trim(),p=cp.value.trim();if(!n)return;db.customers.push({id:Date.now(),name:n,phone:p,debt:0});save();closeModal()}
+function openExpense(){modal(`<h3>Ƙara Expense</h3><input id="ed" class="input" placeholder="Bayani"><br><input id="ea" class="input" type="number" placeholder="Amount"><div class="row" style="margin-top:12px"><button class="btn" onclick="addExpense()">Ajiye</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)}
+function addExpense(){let d=ed.value.trim(),a=+ea.value;if(!d||!a)return;db.expenses.push({id:Date.now(),desc:d,amount:a,date:dateKey()});save();closeModal()}
+function openSale(){
+ if(!db.products.length)return alert('Da farko ka ƙara Products.');
+ modal(`<h3>Sabuwar Sale</h3><select id="sp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (stock ${p.stock})</option>`).join('')}</select><br>
+ <input id="sq" class="input" type="number" min="1" value="1" placeholder="Quantity"><br>
+ <input id="sc" class="input" placeholder="Customer name (optional)"><br>
+ <select id="sm" class="input"><option value="paid">An biya</option><option value="credit">Bashi</option></select>
+ <div class="row" style="margin-top:12px"><button class="btn" onclick="addSale()">Kammala Sale</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)
+}
+function addSale(){
+ let p=db.products.find(x=>x.id==+sp.value),q=+sq.value,c=sc.value.trim()||'Walk-in',status=sm.value;
+ if(!p||q<1||q>p.stock)return alert('Quantity ta fi stock ko ba daidai ba.');
+ let total=p.sell*q,profit=(p.sell-p.buy)*q;p.stock-=q;
+ if(status==='credit'){let cu=db.customers.find(x=>x.name.toLowerCase()===c.toLowerCase());if(cu)cu.debt+=total;else db.customers.push({id:Date.now(),name:c,phone:'',debt:total})}
+ db.sales.push({id:Date.now(),date:new Date().toISOString(),customer:c,total,profit,status});save();closeModal()
+}
+function modal(x){modalBody.innerHTML=x;document.getElementById('modal').classList.add('open')}
+function render(){
+ today.textContent=new Date().toLocaleDateString(lang==='ha'?'ha-NG':'en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+ let todaySales=db.sales.filter(x=>x.date.slice(0,10)===dateKey()), st=todaySales.reduce((a,x)=>a+x.total,0), pt=todaySales.reduce((a,x)=>a+x.profit,0);
+ salesToday.textContent=money(st);profitToday.textContent=money(pt);debtTotal.textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));productCount.textContent=db.products.length;
+
+ const ha=lang==='ha';
+ lowStock.innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?'Sake Kaya':'Restock'}</span></td></tr>`).join('')||
+ `<tr><td colspan="3" class="empty">${ha?'Babu kayan da suka kusa karewa yanzu.':'No low-stock products now.'}</td></tr>`;
+
+ productsTable.innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
+ `<tr><td colspan="5" class="empty">${ha?'Babu kaya. Danna “+ Ƙara Kaya”.':'No products yet. Tap “+ Add Product”.'}</td></tr>`;
+
+ salesTable.innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td></tr>`).join('')||
+ `<tr><td colspan="5" class="empty">${ha?'Babu sayarwa tukuna.':'No sales yet.'}</td></tr>`;
+
+ customersTable.innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td></tr>`).join('')||
+ `<tr><td colspan="3" class="empty">${ha?'Babu masu saye tukuna.':'No customers yet.'}</td></tr>`;
+
+ expensesTable.innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
+ `<tr><td colspan="3" class="empty">${ha?'Babu kashe-kashe tukuna.':'No expenses yet.'}</td></tr>`;
+
+ let as=db.sales.reduce((a,x)=>a+x.total,0),ap=db.sales.reduce((a,x)=>a+x.profit,0),ae=db.expenses.reduce((a,x)=>a+x.amount,0);
+ allSales.textContent=money(as);allProfit.textContent=money(ap);allExpenses.textContent=money(ae);netProfit.textContent=money(ap-ae);
+ updateTableHeaders();
+}
+function updateTableHeaders(){
+ const ha=lang==='ha';
+ document.querySelector('#lowStock').closest('table').querySelector('thead').innerHTML =
+ `<tr><th>${ha?'Kaya':'Product'}</th><th>${ha?'Adadi':'Stock'}</th><th>${ha?'Faɗakarwa':'Alert'}</th></tr>`;
+ document.querySelector('#productsTable').closest('table').querySelector('thead').innerHTML =
+ `<tr><th>${ha?'Kaya':'Product'}</th><th>${ha?'Adadi':'Stock'}</th><th>${ha?'Saye':'Buy'}</th><th>${ha?'Siyarwa':'Sell'}</th><th>${ha?'Ribar Kaya Ɗaya':'Profit/Unit'}</th></tr>`;
+ document.querySelector('#salesTable').closest('table').querySelector('thead').innerHTML =
+ `<tr><th>${ha?'Lokaci':'Time'}</th><th>${ha?'Mai Saye':'Customer'}</th><th>${ha?'Jimilla':'Total'}</th><th>${ha?'Riba':'Profit'}</th><th>${ha?'Matsayi':'Status'}</th></tr>`;
+ document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML =
+ `<tr><th>${ha?'Suna':'Name'}</th><th>${ha?'Lambar Waya':'Phone'}</th><th>${ha?'Bashi':'Debt'}</th></tr>`;
+ document.querySelector('#expensesTable').closest('table').querySelector('thead').innerHTML =
+ `<tr><th>${ha?'Bayani':'Description'}</th><th>${ha?'Adadi':'Amount'}</th><th>${ha?'Rana':'Date'}</th></tr>`;
+}
+
+function setLang(v){
+ lang=v;localStorage.setItem(LANG_KEY,v);applyLang();
+}
+function applyLang(){
+ const t=L[lang];
+ langSwitch.value=lang; tagline.textContent=t.tagline;
+ document.querySelectorAll('#bottomNav [data-ha]').forEach(el=>el.textContent=lang==='ha'?el.dataset.ha:el.dataset.en);
+ const navBtns=document.querySelectorAll('#nav button');
+ [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
+ document.querySelector('#dashboard h2').textContent=t.dashTitle;
+ document.querySelector('#dashboard .btn.gold').textContent=t.newSale;
+ const statLabels=document.querySelectorAll('#dashboard .stat small');
+ [t.salesToday,t.profitToday,t.debt,t.productCount].forEach((x,i)=>{if(statLabels[i])statLabels[i].textContent=x});
+ const dh=document.querySelectorAll('#dashboard .section-head');
+ if(dh[1]){dh[1].querySelector('h3').textContent=t.lowStock;dh[1].querySelector('button').textContent=t.viewProducts}
+ document.querySelector('#products h2').textContent=t.productStock;document.querySelector('#products .btn.gold').textContent=t.addProduct;
+ document.querySelector('#sales h2').textContent=t.salesTitle;document.querySelector('#sales .btn.gold').textContent=t.addSale;
+ document.querySelector('#customers h2').textContent=t.custDebt;document.querySelector('#customers .btn.gold').textContent=t.addCustomer;
+ document.querySelector('#expenses h2').textContent=t.expensesTitle;document.querySelector('#expenses .btn.gold').textContent=t.addExpense;
+ document.querySelector('#profit h2').textContent=t.pnl;
+ const pstats=document.querySelectorAll('#profit .stat small');
+ [t.totalSales,t.grossProfit,t.exp,t.netProfit].forEach((x,i)=>{if(pstats[i])pstats[i].textContent=x});
+ render();
+}
+
+render();applyLang();
+
+</script>
+
+<div class="bottom-nav" id="bottomNav">
+  <button class="bn active" onclick="show('dashboard')"><span>⌂</span><small data-ha="Babban Shafi" data-en="Home">Home</small></button>
+  <button class="bn" onclick="show('products')"><span>📦</span><small data-ha="Kaya" data-en="Products">Products</small></button>
+  <button class="bn sell" onclick="openSale()"><span>＋</span><small data-ha="Sayarwa" data-en="Sell">Sell</small></button>
+  <button class="bn" onclick="show('sales')"><span>🛒</span><small data-ha="Sayarwa" data-en="Sales">Sales</small></button>
+  <button class="bn" onclick="show('customers')"><span>👥</span><small data-ha="Masu Saye" data-en="Customers">Customers</small></button>
+</div>
+
+</body></html>
