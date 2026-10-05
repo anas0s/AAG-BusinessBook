@@ -149,18 +149,26 @@ function addExpense(){let d=document.getElementById('ed').value.trim(),a=+docume
 function openSale(){
  const t=L[lang];
  if(!db.products.length)return alert(t.firstAdd);
+ const customerOptions=`<option value="">${t.walkIn}</option>`+db.customers.map(c=>`<option value="${c.id}">${c.name}${c.phone?' — '+c.phone:''}</option>`).join('');
  modal(`<h3>${t.newSaleTitle}</h3><select id="sp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (${t.stock.toLowerCase()} ${p.stock})</option>`).join('')}</select><br>
  <input id="sq" class="input" type="number" min="1" value="1" placeholder="${t.quantity}"><br>
- <input id="sc" class="input" placeholder="${t.customerOptional}"><br>
+ <select id="sc" class="input">${customerOptions}</select><br>
  <select id="sm" class="input"><option value="paid">${t.paid}</option><option value="credit">${t.credit}</option></select>
  <div class="row" style="margin-top:12px"><button class="btn" onclick="addSale()">${t.finishSale}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
 function addSale(){
- const t=L[lang]; let p=db.products.find(x=>x.id==+document.getElementById('sp').value),q=+document.getElementById('sq').value,c=document.getElementById('sc').value.trim()||t.walkIn,status=document.getElementById('sm').value;
+ const t=L[lang];
+ let p=db.products.find(x=>x.id==+document.getElementById('sp').value),q=+document.getElementById('sq').value,customerId=document.getElementById('sc').value,status=document.getElementById('sm').value;
  if(!p||q<1||q>p.stock)return alert(t.badQty);
- let total=p.sell*q,profit=(p.sell-p.buy)*q;p.stock-=q;
- if(status==='credit'){let cu=db.customers.find(x=>x.name.toLowerCase()===c.toLowerCase());if(cu)cu.debt+=total;else db.customers.push({id:Date.now(),name:c,phone:'',debt:total})}
- const sale={id:Date.now(),date:new Date().toISOString(),customer:c,product:p.name,qty:q,unitPrice:p.sell,total,profit,status};
+ let cu=customerId?db.customers.find(x=>x.id==+customerId):null;
+ let c=cu?cu.name:t.walkIn;
+ let total=p.sell*q,profit=(p.sell-p.buy)*q;
+ if(status==='credit'){
+   if(!cu){return alert(lang==='ha'?'Zaɓi customer domin sayarwa a bashi.':'Select a customer for a credit sale.');}
+   cu.debt=(cu.debt||0)+total;
+ }
+ p.stock-=q;
+ const sale={id:Date.now(),date:new Date().toISOString(),customer:c,customerId:cu?cu.id:null,product:p.name,qty:q,unitPrice:p.sell,total,profit,status};
  db.sales.push(sale);save();closeModal();openReceipt(sale.id)
 }
 function openReceipt(id){const t=L[lang],s=db.sales.find(x=>x.id==id);if(!s)return;modal(`<div id="receiptBox" style="padding:8px;background:#fff"><div style="text-align:center"><b style="font-size:20px">AAG BusinessBook</b><div>${t.receipt}</div></div><hr><p><b>${t.date}:</b> ${new Date(s.date).toLocaleString(lang==='ha'?'ha-NG':'en-NG')}</p><p><b>${t.customer}:</b> ${s.customer}</p><p><b>${t.product}:</b> ${s.product||'-'}</p><p><b>${t.quantity}:</b> ${s.qty||'-'}</p><p><b>${t.total}:</b> ${money(s.total)}</p><p><b>${t.status}:</b> ${s.status==='paid'?t.paidStatus:t.creditStatus}</p><hr><div class="row"><button class="btn" onclick="printReceipt()">${t.print}</button><button class="btn light" onclick="closeModal()">${t.close}</button></div></div>`)}
