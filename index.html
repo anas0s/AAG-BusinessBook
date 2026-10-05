@@ -75,7 +75,7 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 </section>
 
 <section id="purchases" class="view">
- <div class="section-head"><h2>Sayen Kaya</h2></div>
+ <div class="section-head"><h2>Sayen Kaya</h2><button class="btn gold" onclick="openRestock()">+ Shigo da Kaya</button></div><div class="grid"><div class="card stat"><small id="purchaseTotalLabel">Jimillar Kudin Sayen Kaya</small><strong id="purchaseTotal">₦0</strong></div></div>
  <div class="card tablewrap"><table class="table"><thead><tr><th>Kaya</th><th>Yawa</th><th>Farashi</th><th>Jimilla</th><th>Rana</th></tr></thead><tbody id="purchasesTable"></tbody></table></div>
 </section>
 
@@ -111,13 +111,13 @@ const L={
    addProductTitle:'Ƙara Kaya',productName:'Sunan Kaya',stock:'Adadin Kaya',buyPrice:'Farashin Saye',sellPrice:'Farashin Siyarwa',save:'Ajiye',cancel:'Soke',enterProduct:'Shigar da sunan kaya',
    addCustomerTitle:'Ƙara Mai Saye',customerName:'Sunan Mai Saye',phone:'Lambar Waya',addExpenseTitle:'Ƙara Kashewa',description:'Bayani',amount:'Adadi',newSaleTitle:'Sabuwar Sayarwa',quantity:'Yawa',customerOptional:'Sunan Mai Saye (na zaɓi)',paid:'An biya',credit:'Bashi',finishSale:'Kammala Sayarwa',firstAdd:'Da farko ka ƙara kaya.',badQty:'Yawan ya fi stock ko ba daidai ba.',walkIn:'Mai Saye na Wucewa',
    product:'Kaya',stockHead:'Adadi',alert:'Faɗakarwa',buy:'Saye',sell:'Siyarwa',profitUnit:'Ribar Kaya Ɗaya',time:'Lokaci',customer:'Mai Saye',total:'Jimilla',status:'Matsayi',name:'Suna',date:'Rana',
-   restock:'Sake Kaya',stockIn:'+ Shigo da Kaya',purchases:'Sayen Kaya',purchasesTitle:'Sayen Kaya',payment:'Biya Bashi',history:'Tarihi Biyan Bashi',paymentHistory:'Tarihin Biyan Bashi',originalDebt:'Jimillar Bashi',paidAmount:'An Biya',remainingDebt:'Ragowar Bashi',receipt:'Rasit',print:'Buga Rasit',close:'Rufe',payDebtTitle:'Biyan Bashi',payAmount:'Adadin Biyan',paidDebt:'An karɓa',noPurchases:'Babu tarihin sayen kaya tukuna.',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
+   restock:'Sake Kaya',stockIn:'+ Shigo da Kaya',purchases:'Sayen Kaya',purchasesTitle:'Sayen Kaya',purchaseTotal:'Jimillar Kudin Sayen Kaya',payment:'Biya Bashi',history:'Tarihi Biyan Bashi',paymentHistory:'Tarihin Biyan Bashi',originalDebt:'Jimillar Bashi',paidAmount:'An Biya',remainingDebt:'Ragowar Bashi',receipt:'Rasit',print:'Buga Rasit',close:'Rufe',payDebtTitle:'Biyan Bashi',payAmount:'Adadin Biyan',paidDebt:'An karɓa',noPurchases:'Babu tarihin sayen kaya tukuna.',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
  },
  en:{tagline:'V1.5 • Simple business management',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
    addProductTitle:'Add Product',productName:'Product name',stock:'Stock',buyPrice:'Buying price',sellPrice:'Selling price',save:'Save',cancel:'Cancel',enterProduct:'Enter the product name',
    addCustomerTitle:'Add Customer',customerName:'Customer name',phone:'Phone',addExpenseTitle:'Add Expense',description:'Description',amount:'Amount',newSaleTitle:'New Sale',quantity:'Quantity',customerOptional:'Customer name (optional)',paid:'Paid',credit:'Credit',finishSale:'Complete Sale',firstAdd:'Please add products first.',badQty:'Quantity is greater than stock or invalid.',walkIn:'Walk-in',
    product:'Product',stockHead:'Stock',alert:'Alert',buy:'Buy',sell:'Sell',profitUnit:'Profit/Unit',time:'Time',customer:'Customer',total:'Total',status:'Status',name:'Name',date:'Date',
-   restock:'Stock In',stockIn:'+ Stock In',purchases:'Purchases',purchasesTitle:'Purchases',payment:'Pay Debt',history:'Payment History',paymentHistory:'Debt Payment History',originalDebt:'Original Debt',paidAmount:'Paid',remainingDebt:'Remaining Debt',receipt:'Receipt',print:'Print Receipt',close:'Close',payDebtTitle:'Debt Payment',payAmount:'Payment amount',paidDebt:'Payment received',noPurchases:'No purchase history yet.',noLow:'No low-stock products now.',noProducts:'No products yet. Tap “+ Add product”.',noSales:'No sales yet.',noCustomers:'No customers yet.',noExpenses:'No expenses yet.',paidStatus:'Paid',creditStatus:'Credit',home:'Home',sellNav:'Sell'
+   restock:'Stock In',stockIn:'+ Stock In',purchases:'Purchases',purchasesTitle:'Purchases',purchaseTotal:'Total Purchase Cost',payment:'Pay Debt',history:'Payment History',paymentHistory:'Debt Payment History',originalDebt:'Original Debt',paidAmount:'Paid',remainingDebt:'Remaining Debt',receipt:'Receipt',print:'Print Receipt',close:'Close',payDebtTitle:'Debt Payment',payAmount:'Payment amount',paidDebt:'Payment received',noPurchases:'No purchase history yet.',noLow:'No low-stock products now.',noProducts:'No products yet. Tap “+ Add product”.',noSales:'No sales yet.',noCustomers:'No customers yet.',noExpenses:'No expenses yet.',paidStatus:'Paid',creditStatus:'Credit',home:'Home',sellNav:'Sell'
  }
 };
 
@@ -203,7 +203,7 @@ function render(){
  document.getElementById('expensesTable').innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
  `<tr><td colspan="3" class="empty">${ha?L.ha.noExpenses:L.en.noExpenses}</td></tr>`;
 
- document.getElementById('purchasesTable').innerHTML=db.purchases.slice().reverse().map(x=>`<tr><td>${x.product}</td><td>${x.qty}</td><td>${money(x.cost)}</td><td>${money(x.total)}</td><td>${x.date}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t.noPurchases}</td></tr>`;
+ const purchaseTotal=db.purchases.reduce((a,x)=>a+(x.total||0),0); document.getElementById('purchaseTotal').textContent=money(purchaseTotal); document.getElementById('purchasesTable').innerHTML=db.purchases.slice().reverse().map(x=>`<tr><td>${x.product}</td><td>${x.qty}</td><td>${money(x.cost)}</td><td>${money(x.total)}</td><td>${x.date?new Date(x.date).toLocaleString(ha?'ha-NG':'en-NG'):''}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t.noPurchases}</td></tr>`;
 
  let as=db.sales.reduce((a,x)=>a+x.total,0),ap=db.sales.reduce((a,x)=>a+x.profit,0),ae=db.expenses.reduce((a,x)=>a+x.amount,0);
  document.getElementById('allSales').textContent=money(as);document.getElementById('allProfit').textContent=money(ap);document.getElementById('allExpenses').textContent=money(ae);document.getElementById('netProfit').textContent=money(ap-ae);
@@ -240,7 +240,7 @@ function applyLang(){
  document.querySelector('#sales h2').textContent=t.salesTitle;document.querySelector('#sales .btn.gold').textContent=t.addSale;
  document.querySelector('#customers h2').textContent=t.custDebt;document.querySelector('#customers .btn.gold').textContent=t.addCustomer;
  document.querySelector('#expenses h2').textContent=t.expensesTitle;document.querySelector('#expenses .btn.gold').textContent=t.addExpense;
- document.querySelector('#purchases h2').textContent=t.purchasesTitle;
+ document.querySelector('#purchases h2').textContent=t.purchasesTitle; document.querySelector('#purchases .btn.gold').textContent=t.stockIn; document.getElementById('purchaseTotalLabel').textContent=t.purchaseTotal;
  document.querySelector('#profit h2').textContent=t.pnl;
  const pstats=document.querySelectorAll('#profit .stat small');
  [t.totalSales,t.grossProfit,t.exp,t.netProfit].forEach((x,i)=>{if(pstats[i])pstats[i].textContent=x});
