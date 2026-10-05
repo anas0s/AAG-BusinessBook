@@ -90,7 +90,24 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 <script>
 const KEY='aag_businessbook_v1';
 let db=JSON.parse(localStorage.getItem(KEY)||'null')||{products:[],sales:[],customers:[],expenses:[]};
-const navItems=[['dashboard','Dashboard'],['products','📦 Kaya'],['sales','🛒 Sales'],['customers','👥 Customers'],['expenses','💸 Expenses'],['profit','📈 Riba']];
+const navItems=[['dashboard','Dashboard'],['products','📦 Products'],['sales','🛒 Sales'],['customers','👥 Customers'],['expenses','💸 Expenses'],['profit','📈 Profit']];
+const LANG_KEY='aag_language';
+let lang=localStorage.getItem(LANG_KEY)||'ha';
+const L={
+ ha:{tagline:'V1 • Kasuwanci cikin sauƙi',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
+   addProductTitle:'Ƙara Kaya',productName:'Sunan Kaya',stock:'Adadin Kaya',buyPrice:'Farashin Saye',sellPrice:'Farashin Siyarwa',save:'Ajiye',cancel:'Soke',enterProduct:'Shigar da sunan kaya',
+   addCustomerTitle:'Ƙara Mai Saye',customerName:'Sunan Mai Saye',phone:'Lambar Waya',addExpenseTitle:'Ƙara Kashewa',description:'Bayani',amount:'Adadi',newSaleTitle:'Sabuwar Sayarwa',quantity:'Yawa',customerOptional:'Sunan Mai Saye (na zaɓi)',paid:'An biya',credit:'Bashi',finishSale:'Kammala Sayarwa',firstAdd:'Da farko ka ƙara kaya.',badQty:'Yawan ya fi stock ko ba daidai ba.',walkIn:'Mai Saye na Wucewa',
+   product:'Kaya',stockHead:'Adadi',alert:'Faɗakarwa',buy:'Saye',sell:'Siyarwa',profitUnit:'Ribar Kaya Ɗaya',time:'Lokaci',customer:'Mai Saye',total:'Jimilla',status:'Matsayi',name:'Suna',date:'Rana',
+   restock:'Sake Kaya',noLow:'Babu kayan da suka kusa karewa yanzu.',noProducts:'Babu kaya. Danna “+ Ƙara kaya”.',noSales:'Babu sayarwa tukuna.',noCustomers:'Babu masu saye tukuna.',noExpenses:'Babu kashe-kashe tukuna.',paidStatus:'An Biya',creditStatus:'Bashi',home:'Babban Shafi',sellNav:'Sayarwa'
+ },
+ en:{tagline:'V1 • Simple business management',dashboard:'Dashboard',products:'Products',sales:'Sales',customers:'Customers',expenses:'Expenses',profit:'Profit',dashTitle:'Dashboard',newSale:'+ New Sale',salesToday:'Sales today',profitToday:'Profit today',debt:'Debt',productCount:'Products',lowStock:'Low Stock',viewProducts:'View products',productStock:'Products / Stock',addProduct:'+ Add product',salesTitle:'Sales',addSale:'+ Sale',custDebt:'Customers / Debt',addCustomer:'+ Customer',expensesTitle:'Expenses',addExpense:'+ Expense',pnl:'Profit & Loss',totalSales:'Total Sales',grossProfit:'Gross Profit',exp:'Expenses',netProfit:'Net Profit',
+   addProductTitle:'Add Product',productName:'Product name',stock:'Stock',buyPrice:'Buying price',sellPrice:'Selling price',save:'Save',cancel:'Cancel',enterProduct:'Enter the product name',
+   addCustomerTitle:'Add Customer',customerName:'Customer name',phone:'Phone',addExpenseTitle:'Add Expense',description:'Description',amount:'Amount',newSaleTitle:'New Sale',quantity:'Quantity',customerOptional:'Customer name (optional)',paid:'Paid',credit:'Credit',finishSale:'Complete Sale',firstAdd:'Please add products first.',badQty:'Quantity is greater than stock or invalid.',walkIn:'Walk-in',
+   product:'Product',stockHead:'Stock',alert:'Alert',buy:'Buy',sell:'Sell',profitUnit:'Profit/Unit',time:'Time',customer:'Customer',total:'Total',status:'Status',name:'Name',date:'Date',
+   restock:'Restock',noLow:'No low-stock products now.',noProducts:'No products yet. Tap “+ Add product”.',noSales:'No sales yet.',noCustomers:'No customers yet.',noExpenses:'No expenses yet.',paidStatus:'Paid',creditStatus:'Credit',home:'Home',sellNav:'Sell'
+ }
+};
+
 document.getElementById('nav').innerHTML=navItems.map(([id,t],i)=>`<button class="${i?'':'active'}" onclick="show('${id}',this)">${t}</button>`).join('');
 function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
 function money(n){return '₦'+Number(n||0).toLocaleString('en-NG',{maximumFractionDigits:2})}
@@ -104,28 +121,29 @@ function show(id,btn){
 }
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 function openProduct(){
- const ha=lang==='ha';
- modal(`<h3>${ha?'Ƙara Kaya':'Add Product'}</h3><div class="formgrid">
- <input id="pn" class="input" placeholder="${ha?'Sunan Kaya':'Product name'}"><input id="ps" class="input" type="number" placeholder="${ha?'Adadin Kaya':'Stock'}">
- <input id="pb" class="input" type="number" placeholder="${ha?'Farashin Saye':'Buying price'}"><input id="pv" class="input" type="number" placeholder="${ha?'Farashin Siyarwa':'Selling price'}">
- </div><div class="row" style="margin-top:12px"><button class="btn" onclick="addProduct()">${ha?'Ajiye':'Save'}</button><button class="btn light" onclick="closeModal()">${ha?'Soke':'Cancel'}</button></div>`)
+ const t=L[lang];
+ modal(`<h3>${t.addProductTitle}</h3><div class="formgrid">
+ <input id="pn" class="input" placeholder="${t.productName}"><input id="ps" class="input" type="number" placeholder="${t.stock}">
+ <input id="pb" class="input" type="number" placeholder="${t.buyPrice}"><input id="pv" class="input" type="number" placeholder="${t.sellPrice}">
+ </div><div class="row" style="margin-top:12px"><button class="btn" onclick="addProduct()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
 function addProduct(){let n=pn.value.trim(),s=+ps.value,b=+pb.value,v=+pv.value;if(!n)return alert(lang==='ha'?'Shigar da sunan kaya':'Enter the product name');db.products.push({id:Date.now(),name:n,stock:s,buy:b,sell:v});save();closeModal()}
-function openCustomer(){modal(`<h3>Ƙara Customer</h3><input id="cn" class="input" placeholder="Sunan customer"><br><input id="cp" class="input" placeholder="Phone"><div class="row" style="margin-top:12px"><button class="btn" onclick="addCustomer()">Ajiye</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)}
+function openCustomer(){const t=L[lang];modal(`<h3>${t.addCustomerTitle}</h3><input id="cn" class="input" placeholder="${t.customerName}"><br><input id="cp" class="input" placeholder="${t.phone}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addCustomer()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
 function addCustomer(){let n=cn.value.trim(),p=cp.value.trim();if(!n)return;db.customers.push({id:Date.now(),name:n,phone:p,debt:0});save();closeModal()}
-function openExpense(){modal(`<h3>Ƙara Expense</h3><input id="ed" class="input" placeholder="Bayani"><br><input id="ea" class="input" type="number" placeholder="Amount"><div class="row" style="margin-top:12px"><button class="btn" onclick="addExpense()">Ajiye</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)}
+function openExpense(){const t=L[lang];modal(`<h3>${t.addExpenseTitle}</h3><input id="ed" class="input" placeholder="${t.description}"><br><input id="ea" class="input" type="number" placeholder="${t.amount}"><div class="row" style="margin-top:12px"><button class="btn" onclick="addExpense()">${t.save}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)}
 function addExpense(){let d=ed.value.trim(),a=+ea.value;if(!d||!a)return;db.expenses.push({id:Date.now(),desc:d,amount:a,date:dateKey()});save();closeModal()}
 function openSale(){
- if(!db.products.length)return alert('Da farko ka ƙara Products.');
- modal(`<h3>Sabuwar Sale</h3><select id="sp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (stock ${p.stock})</option>`).join('')}</select><br>
- <input id="sq" class="input" type="number" min="1" value="1" placeholder="Quantity"><br>
- <input id="sc" class="input" placeholder="Customer name (optional)"><br>
- <select id="sm" class="input"><option value="paid">An biya</option><option value="credit">Bashi</option></select>
- <div class="row" style="margin-top:12px"><button class="btn" onclick="addSale()">Kammala Sale</button><button class="btn light" onclick="closeModal()">Cancel</button></div>`)
+ const t=L[lang];
+ if(!db.products.length)return alert(t.firstAdd);
+ modal(`<h3>${t.newSaleTitle}</h3><select id="sp" class="input">${db.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (${t.stock.toLowerCase()} ${p.stock})</option>`).join('')}</select><br>
+ <input id="sq" class="input" type="number" min="1" value="1" placeholder="${t.quantity}"><br>
+ <input id="sc" class="input" placeholder="${t.customerOptional}"><br>
+ <select id="sm" class="input"><option value="paid">${t.paid}</option><option value="credit">${t.credit}</option></select>
+ <div class="row" style="margin-top:12px"><button class="btn" onclick="addSale()">${t.finishSale}</button><button class="btn light" onclick="closeModal()">${t.cancel}</button></div>`)
 }
 function addSale(){
- let p=db.products.find(x=>x.id==+sp.value),q=+sq.value,c=sc.value.trim()||'Walk-in',status=sm.value;
- if(!p||q<1||q>p.stock)return alert('Quantity ta fi stock ko ba daidai ba.');
+ const t=L[lang]; let p=db.products.find(x=>x.id==+sp.value),q=+sq.value,c=sc.value.trim()||t.walkIn,status=sm.value;
+ if(!p||q<1||q>p.stock)return alert(t.badQty);
  let total=p.sell*q,profit=(p.sell-p.buy)*q;p.stock-=q;
  if(status==='credit'){let cu=db.customers.find(x=>x.name.toLowerCase()===c.toLowerCase());if(cu)cu.debt+=total;else db.customers.push({id:Date.now(),name:c,phone:'',debt:total})}
  db.sales.push({id:Date.now(),date:new Date().toISOString(),customer:c,total,profit,status});save();closeModal()
@@ -137,45 +155,42 @@ function render(){
  salesToday.textContent=money(st);profitToday.textContent=money(pt);debtTotal.textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));productCount.textContent=db.products.length;
 
  const ha=lang==='ha';
- lowStock.innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?'Sake Kaya':'Restock'}</span></td></tr>`).join('')||
- `<tr><td colspan="3" class="empty">${ha?'Babu kayan da suka kusa karewa yanzu.':'No low-stock products now.'}</td></tr>`;
+ lowStock.innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?L.ha.restock:L.en.restock}</span></td></tr>`).join('')||
+ `<tr><td colspan="3" class="empty">${ha?L.ha.noLow:L.en.noLow}</td></tr>`;
 
  productsTable.innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
- `<tr><td colspan="5" class="empty">${ha?'Babu kaya. Danna “+ Ƙara Kaya”.':'No products yet. Tap “+ Add Product”.'}</td></tr>`;
+ `<tr><td colspan="5" class="empty">${ha?L.ha.noProducts:L.en.noProducts}</td></tr>`;
 
  salesTable.innerHTML=db.sales.slice().reverse().map(s=>`<tr><td>${new Date(s.date).toLocaleString(ha?'ha-NG':'en-NG')}</td><td>${s.customer}</td><td>${money(s.total)}</td><td>${money(s.profit)}</td><td><span class="pill">${s.status==='paid'?(ha?'An Biya':'Paid'):(ha?'Bashi':'Credit')}</span></td></tr>`).join('')||
- `<tr><td colspan="5" class="empty">${ha?'Babu sayarwa tukuna.':'No sales yet.'}</td></tr>`;
+ `<tr><td colspan="5" class="empty">${ha?L.ha.noSales:L.en.noSales}</td></tr>`;
 
  customersTable.innerHTML=db.customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone||'-'}</td><td class="${c.debt?'danger':''}">${money(c.debt)}</td></tr>`).join('')||
- `<tr><td colspan="3" class="empty">${ha?'Babu masu saye tukuna.':'No customers yet.'}</td></tr>`;
+ `<tr><td colspan="3" class="empty">${ha?L.ha.noCustomers:L.en.noCustomers}</td></tr>`;
 
  expensesTable.innerHTML=db.expenses.slice().reverse().map(e=>`<tr><td>${e.desc}</td><td>${money(e.amount)}</td><td>${e.date}</td></tr>`).join('')||
- `<tr><td colspan="3" class="empty">${ha?'Babu kashe-kashe tukuna.':'No expenses yet.'}</td></tr>`;
+ `<tr><td colspan="3" class="empty">${ha?L.ha.noExpenses:L.en.noExpenses}</td></tr>`;
 
  let as=db.sales.reduce((a,x)=>a+x.total,0),ap=db.sales.reduce((a,x)=>a+x.profit,0),ae=db.expenses.reduce((a,x)=>a+x.amount,0);
  allSales.textContent=money(as);allProfit.textContent=money(ap);allExpenses.textContent=money(ae);netProfit.textContent=money(ap-ae);
  updateTableHeaders();
 }
 function updateTableHeaders(){
- const ha=lang==='ha';
- document.querySelector('#lowStock').closest('table').querySelector('thead').innerHTML =
- `<tr><th>${ha?'Kaya':'Product'}</th><th>${ha?'Adadi':'Stock'}</th><th>${ha?'Faɗakarwa':'Alert'}</th></tr>`;
- document.querySelector('#productsTable').closest('table').querySelector('thead').innerHTML =
- `<tr><th>${ha?'Kaya':'Product'}</th><th>${ha?'Adadi':'Stock'}</th><th>${ha?'Saye':'Buy'}</th><th>${ha?'Siyarwa':'Sell'}</th><th>${ha?'Ribar Kaya Ɗaya':'Profit/Unit'}</th></tr>`;
- document.querySelector('#salesTable').closest('table').querySelector('thead').innerHTML =
- `<tr><th>${ha?'Lokaci':'Time'}</th><th>${ha?'Mai Saye':'Customer'}</th><th>${ha?'Jimilla':'Total'}</th><th>${ha?'Riba':'Profit'}</th><th>${ha?'Matsayi':'Status'}</th></tr>`;
- document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML =
- `<tr><th>${ha?'Suna':'Name'}</th><th>${ha?'Lambar Waya':'Phone'}</th><th>${ha?'Bashi':'Debt'}</th></tr>`;
- document.querySelector('#expensesTable').closest('table').querySelector('thead').innerHTML =
- `<tr><th>${ha?'Bayani':'Description'}</th><th>${ha?'Adadi':'Amount'}</th><th>${ha?'Rana':'Date'}</th></tr>`;
+ const t=L[lang];
+ document.querySelector('#lowStock').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.alert}</th></tr>`;
+ document.querySelector('#productsTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.buy}</th><th>${t.sell}</th><th>${t.profitUnit}</th></tr>`;
+ document.querySelector('#salesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.time}</th><th>${t.customer}</th><th>${t.total}</th><th>${t.profitUnit.replace('Kaya Ɗaya','').replace('Profit/Unit','Profit').trim()}</th><th>${t.status}</th></tr>`;
+ document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.name}</th><th>${t.phone}</th><th>${t.debt}</th></tr>`;
+ document.querySelector('#expensesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.description}</th><th>${t.amount}</th><th>${t.date}</th></tr>`;
 }
+
 
 function setLang(v){
  lang=v;localStorage.setItem(LANG_KEY,v);applyLang();
 }
 function applyLang(){
  const t=L[lang];
- langSwitch.value=lang; tagline.textContent=t.tagline;
+ langSwitch.value=lang;
+ tagline.textContent=t.tagline;
  document.querySelectorAll('#bottomNav [data-ha]').forEach(el=>el.textContent=lang==='ha'?el.dataset.ha:el.dataset.en);
  const navBtns=document.querySelectorAll('#nav button');
  [t.dashboard,t.products,t.sales,t.customers,t.expenses,t.profit].forEach((x,i)=>{if(navBtns[i])navBtns[i].textContent=x});
@@ -194,6 +209,7 @@ function applyLang(){
  [t.totalSales,t.grossProfit,t.exp,t.netProfit].forEach((x,i)=>{if(pstats[i])pstats[i].textContent=x});
  render();
 }
+
 
 render();applyLang();
 
