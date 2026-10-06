@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b3b2e">
-<title>AAG BusinessBook V2.4</title>
+<title>AAG BusinessBook V2.6</title>
 <style>
 :root{--g:#0b3b2e;--g2:#145943;--gold:#d9ad45;--bg:#f5f7f6;--card:#fff;--text:#17211d;--muted:#6b7771;--danger:#c0392b}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -40,7 +40,7 @@ main{padding:18px}.view{display:none}.view.active{display:block}.grid{display:gr
 <div class="app">
 <header class="top">
  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-    <div class="brand"><div class="logo">A</div><div><b>AAG BusinessBook</b><small id="tagline">V2.4 • Tsarin kasuwanci na AAG</small></div></div>
+    <div class="brand"><div class="logo">A</div><div><b>AAG BusinessBook</b><small id="tagline">V2.6 • Tsarin kasuwanci na AAG</small></div></div>
     <select id="langSwitch" onchange="setLang(this.value)" style="border:1px solid #d9ad45;background:#fff;color:#0b3b2e;border-radius:10px;padding:9px;font-weight:700">
       <option value="ha">Hausa</option><option value="en">English</option>
     </select>
@@ -137,7 +137,7 @@ const navItems=[['dashboard','Dashboard'],['products','📦 Products'],['sales',
 const LANG_KEY='aag_language';
 let lang=localStorage.getItem(LANG_KEY)||'ha';
 const L={
- ha:{tagline:'V2.4 • Tsarin kasuwanci na AAG',homeEyebrow:'KULA DA KASUWANCI',homeTitle:'Kasuwancinka, a ƙarƙashin iko.',homeSub:'Duba kuɗi, sayarwa, riba da abin da ke bukatar kulawa daga wuri guda.',overviewTitle:'Taƙaitaccen Bayanin Kasuwanci',live:'● Aiki yanzu',cashAvailable:'Kuɗin da ke hannu',cashHint:'Sayarwa − sayen kaya − kashewa',debtHint:'Kuɗin customers da bai shigo ba',salesHint:'Abin da aka sayar yau',profitHint:'Ribar sayarwa ta yau',quickTitle:'Ayyukan Gaggawa',qSale:'Sabuwar Sayarwa',qSaleSub:'Yi sayarwa yanzu',qStock:'Shigar da Kaya',qStockSub:'Ƙara stock',qCustomer:'Ƙara Customer',qCustomerSub:'Rubuta sabon mai saya',qExpense:'Rubuta Kashewa',qExpenseSub:'Saka kuɗin da aka kashe',qReceive:'Karɓi Biyan Bashi',qReceiveSub:'Karɓi kuɗin customer',qReceipt:'Rasit',qReceiptSub:'Duba rasit na sayarwa',qReturn:'Mayar da Kaya',qReturnSub:'Duba sayarwar da za a mayar',qReports:'Rahotanni',qReportsSub:'Duba aikin kasuwanci',returnTitle:'Mayar da Kaya',returnHint:'Za mu haɗa cikakken tsarin mayar da kaya a mataki na gaba.',alertsTitle:'Abubuwan da ke Bukatar Kulawa',alertsBtn:'Duba Kaya',perfTitle:'Aikin Kasuwanci',perfSales:'Jimillar Sayarwa',perfProfit:'Jimillar Riba',perfPurchases:'Sayen Kaya',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
+ ha:{tagline:'V2.6 • Tsarin kasuwanci na AAG',homeEyebrow:'KULA DA KASUWANCI',homeTitle:'Kasuwancinka, a ƙarƙashin iko.',homeSub:'Duba kuɗi, sayarwa, riba da abin da ke bukatar kulawa daga wuri guda.',overviewTitle:'Taƙaitaccen Bayanin Kasuwanci',live:'● Aiki yanzu',cashAvailable:'Kuɗin da ke hannu',cashHint:'Sayarwa − sayen kaya − kashewa',debtHint:'Kuɗin customers da bai shigo ba',salesHint:'Abin da aka sayar yau',profitHint:'Ribar sayarwa ta yau',quickTitle:'Ayyukan Gaggawa',qSale:'Sabuwar Sayarwa',qSaleSub:'Yi sayarwa yanzu',qStock:'Shigar da Kaya',qStockSub:'Ƙara stock',qCustomer:'Ƙara Customer',qCustomerSub:'Rubuta sabon mai saya',qExpense:'Rubuta Kashewa',qExpenseSub:'Saka kuɗin da aka kashe',qReceive:'Karɓi Biyan Bashi',qReceiveSub:'Karɓi kuɗin customer',qReceipt:'Rasit',qReceiptSub:'Duba rasit na sayarwa',qReturn:'Mayar da Kaya',qReturnSub:'Duba sayarwar da za a mayar',qReports:'Rahotanni',qReportsSub:'Duba aikin kasuwanci',returnTitle:'Mayar da Kaya',returnHint:'Za mu haɗa cikakken tsarin mayar da kaya a mataki na gaba.',alertsTitle:'Abubuwan da ke Bukatar Kulawa',alertsBtn:'Duba Kaya',perfTitle:'Aikin Kasuwanci',perfSales:'Jimillar Sayarwa',perfProfit:'Jimillar Riba',perfPurchases:'Sayen Kaya',dashboard:'Babban Shafi',products:'Kaya',sales:'Sayarwa',customers:'Masu Saye',expenses:'Kashe-kashe',profit:'Riba',dashTitle:'Babban Shafi',newSale:'+ Sabuwar Sayarwa',salesToday:'Sayarwa yau',profitToday:'Riba yau',debt:'Bashi',productCount:'Adadin Kaya',lowStock:'Kayan da suka kusa ƙarewa',viewProducts:'Duba kaya',productStock:'Kaya / Stock',addProduct:'+ Ƙara kaya',salesTitle:'Sayarwa',addSale:'+ Sayarwa',custDebt:'Masu Saye / Bashi',addCustomer:'+ Ƙara mai Saye',expensesTitle:'Kashe-kashe',addExpense:'+ Ƙara kashewa',pnl:'Riba da Asara',totalSales:'Jimillar Sayarwa',grossProfit:'Babban Riba',exp:'Kashe-kashe',netProfit:'Ribar Ƙarshe',
    addProductTitle:'Ƙara Kaya',productName:'Sunan Kaya',stock:'Adadin Kaya',buyPrice:'Farashin Saye',sellPrice:'Farashin Siyarwa',save:'Ajiye',cancel:'Soke',enterProduct:'Shigar da sunan kaya',
    addCustomerTitle:'Ƙara Mai Saye',customerName:'Sunan Mai Saye',phone:'Lambar Waya',addExpenseTitle:'Ƙara Kashewa',description:'Bayani',amount:'Adadi',newSaleTitle:'Sabuwar Sayarwa',quantity:'Yawa',customerOptional:'Sunan Mai Saye (na zaɓi)',paid:'An biya',credit:'Bashi',finishSale:'Kammala Sayarwa',firstAdd:'Da farko ka ƙara kaya.',badQty:'Yawan ya fi stock ko ba daidai ba.',walkIn:'Mai Saye na Wucewa',
    product:'Kaya',stockHead:'Adadi',alert:'Faɗakarwa',buy:'Saye',sell:'Siyarwa',profitUnit:'Ribar Kaya Ɗaya',time:'Lokaci',customer:'Mai Saye',total:'Jimilla',status:'Matsayi',name:'Suna',date:'Rana',
@@ -152,7 +152,7 @@ const L={
 };
 
 document.getElementById('nav').innerHTML=navItems.map(([id,t],i)=>`<button class="${i?'':'active'}" onclick="show('${id}',this)">${t}</button>`).join('');
-function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));try{render()}catch(e){console.error('AAG BusinessBook render error:',e)}}
 function money(n){return '₦'+Number(n||0).toLocaleString('en-NG',{maximumFractionDigits:2})}
 function dateKey(d=new Date()){return d.toISOString().slice(0,10)}
 function show(id,btn){
@@ -268,11 +268,10 @@ function render(){
  const debtCustomers=db.customers.filter(c=>(c.debt||0)>0);
  document.getElementById('businessAlerts').innerHTML=(low.length?`<div class="alert-item"><span class="ai">📦</span><div><b>${t.lowStock}</b><small>${low.length} ${lang==='ha'?'kayan da suke kusa ƙarewa':'product(s) running low'}</small></div></div>`:'')+(debtCustomers.length?`<div class="alert-item"><span class="ai">💳</span><div><b>${t.debt}</b><small>${debtCustomers.length} ${lang==='ha'?'customer(s) suna da bashi':'customer(s) have outstanding debt'}</small></div></div>`:'')+((!low.length&&!debtCustomers.length)?`<div class="no-alert">${lang==='ha'?'Babu wani abu mai gaggawa a yanzu. Kasuwanci yana tafiya lafiya.':'Nothing needs attention right now. Your business is running smoothly.'}</div>`:'');
  let todaySales=db.sales.filter(x=>x.date.slice(0,10)===dateKey()), st=todaySales.reduce((a,x)=>a+x.total,0), pt=todaySales.reduce((a,x)=>a+x.profit,0);
- document.getElementById('salesToday').textContent=money(st);document.getElementById('profitToday').textContent=money(pt);document.getElementById('debtTotal').textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));document.getElementById('productCount').textContent=db.products.length;
+ document.getElementById('salesToday').textContent=money(st);document.getElementById('profitToday').textContent=money(pt);document.getElementById('debtTotal').textContent=money(db.customers.reduce((a,x)=>a+(x.debt||0),0));const productCountEl=document.getElementById('productCount'); if(productCountEl) productCountEl.textContent=db.products.length;
 
  const ha=lang==='ha';
- document.getElementById('lowStock').innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?L.ha.restock:L.en.restock}</span></td></tr>`).join('')||
- `<tr><td colspan="3" class="empty">${ha?L.ha.noLow:L.en.noLow}</td></tr>`;
+ const lowStockEl=document.getElementById('lowStock'); if(lowStockEl){lowStockEl.innerHTML=db.products.filter(p=>p.stock<=10).map(p=>`<tr><td>${p.name}</td><td>${p.stock}</td><td><span class="pill">${ha?L.ha.restock:L.en.restock}</span></td></tr>`).join('')||`<tr><td colspan="3" class="empty">${ha?L.ha.noLow:L.en.noLow}</td></tr>`;}
 
  document.getElementById('productsTable').innerHTML=db.products.map(p=>`<tr><td><b>${p.name}</b></td><td>${p.stock}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.sell-p.buy)}</td></tr>`).join('')||
  `<tr><td colspan="5" class="empty">${ha?L.ha.noProducts:L.en.noProducts}</td></tr>`;
@@ -293,7 +292,7 @@ function render(){
 }
 function updateTableHeaders(){
  const t=L[lang];
- document.querySelector('#lowStock').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.alert}</th></tr>`;
+ const lowStockTable=document.querySelector('#lowStock')?.closest('table'); if(lowStockTable) lowStockTable.querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.alert}</th></tr>`;
  document.querySelector('#productsTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.stockHead}</th><th>${t.buy}</th><th>${t.sell}</th><th>${t.profitUnit}</th></tr>`;
 document.querySelector('#customersTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.name}</th><th>${t.phone}</th><th>${t.originalDebt}</th><th>${t.paidAmount}</th><th>${t.remainingDebt}</th><th>${t.payment}</th></tr>`;
 document.querySelector('#purchasesTable').closest('table').querySelector('thead').innerHTML = `<tr><th>${t.product}</th><th>${t.quantity}</th><th>${t.buyPrice}</th><th>${t.total}</th><th>${t.date}</th></tr>`;
